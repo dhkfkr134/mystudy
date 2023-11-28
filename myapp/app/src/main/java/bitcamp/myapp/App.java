@@ -4,11 +4,27 @@
 package bitcamp.myapp;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-    }
+  public static void main(String[] args) {
+    String ANSI_RED = "\003[0;31m";
+    String ANSI_BOLD_RED = "\033[1;31m";
+    String ANSI_CLEAR = "\033[0m";
+    String appTitle = "[과제관리 시스템]";
+    String menu1 = "1. 과제",
+        menu2 = "2. 게시글",
+        menu3 = "3. 도움말",
+        menu4 = "4. 종료";
+    System.out.println(ANSI_BOLD_RED + "[과제관리 프로젝트]" + ANSI_CLEAR);
+    System.out.print("\u001B[38;2;255;180;255m" + menu1 + "\n\u001B[0;22m");
+    System.out.println("\u001B[30;48;2;107;102;255m" + menu2 + "\u001B[0;22m");
+    System.out.printf("\u001B[30;47m" + "3. %s", menu3 + "\n\u001B[0;22m");
+    System.out.println("\u001B[90;47m" + menu4 + "\n\u001B[0;22m");
+    int[] arr1 = new int[3];
+
+    System.out.println("1");
+    arr1[0] = 1;
+    // 할당되지 않은 인덱스에는 접근 불가능
+    // arr1[-1] = 1;
+    System.out.println("2");
+  }
 }
