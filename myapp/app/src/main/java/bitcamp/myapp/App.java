@@ -29,17 +29,15 @@ public class App {
         menu2 = "2. 게시글",
         menu3 = "3. 도움말",
         menu4 = "4. 종료";
-    String menu = """
-        %s
-        %s
-        %s
-        %s
-        %s""".formatted(appTitle, menu1, menu2, menu3, menu4);
+    String[] menu = {appTitle, menu1, menu2, menu3, menu4};
+
     java.io.InputStream inputStream = System.in;
     java.util.Scanner scanner = new java.util.Scanner(inputStream);
     String input = "";
 
-    System.out.println(menu);
+    for (String list : menu) {
+      System.out.println(list);
+    }
     while (true) {
       System.out.print("> ");
 
@@ -60,7 +58,9 @@ public class App {
             System.out.println("종료합니다.");
             break;
           case "menu":
-            System.out.println(menu);
+            for (String list : menu) {
+              System.out.println(list);
+            }
             break;
           default:
             System.out.println("1~4까지의 정수를 입력하세요");
