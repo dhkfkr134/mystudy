@@ -1,45 +1,21 @@
 package com.eomcs.oop.ex02.test;
 
-import com.eomcs.oop.ex02.test.util.Calculator;
+import com.eomcs.oop.ex02.test.vo.Score;
 
-// # 관련된 기능(메서드)을 묶어 분류하기
-// 1) 분류 전
-// 2) 메서드를 클래스로 묶어 분류하기
-// 3) 클래스 변수 도입
-// 4) 클래스 변수의 한계 확인
-// 5) 인스턴스 변수 도입
-// 6) 인스턴스 메서드 활용
-// 7) 클래스를 역할에 따라 패키지로 분류하기
+//0) 낱개 변수 사용
+//
 public class App {
-
   public static void main(String[] args) {
-    // 다음 식을 연산자 우선 순위를 고려하지 않고 순서대로 계산하라!
-    // 2 + 3 - 1 * 7 / 3 = ?
+    
+    Score s1 = new Score("홍길동",100,90,75);
+    Score s2 = new Score("임꺽정",90,80,75);
+    Score s3 = new Score("유관순",80,70,65);
 
-    // 계산 결과를 담을 변수를 준비한다.
-
-    // 메서드를 호출하여 작업을 수행하고,
-    // 리턴 결과는 로컬 변수에 저장한다.
-
-    Calculator c1 = new Calculator();
-    Calculator c2 = new Calculator();
-
-    c1.plus(2);
-    c1.plus(3);
-    c1.minus(1);
-    c1.multiple(7);
-    c1.divide(3);
-
-    System.out.println(Calculator.a);
-
-    System.out.printf("result = %d\n", c1.result);
+    printScore(s1);
+    printScore(s2);
+    printScore(s3);
   }
-
+  static void printScore(Score s) {
+    System.out.printf("%s: %d, %d, %d, %d, %.1f\n", s.name, s.kor, s.eng, s.math, s.sum, s.aver);
+  }
 }
-// 클래스 문법의 용도?
-// 1) 사용자 정의 데이터 타입 만들 때
-// - 즉 새로운 구조의 메모리를 설계할 때 사용한다.
-// 2) 메서드를 묶을 때
-// - 서로 관련된 기능을 관리하기 쉽게 묶고 싶을 때 사용한다.
-
-
