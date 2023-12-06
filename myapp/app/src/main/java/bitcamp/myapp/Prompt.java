@@ -6,7 +6,7 @@ public class Prompt {
 
   static Scanner keyIn = new Scanner(System.in);
 
-  static String input(String title, Object... args) {
+  public static String input(String title, Object... args) {
     System.out.print(String.format(title,args));
     return keyIn.nextLine();
   }
