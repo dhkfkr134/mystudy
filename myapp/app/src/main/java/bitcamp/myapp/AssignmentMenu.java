@@ -1,5 +1,5 @@
 package bitcamp.myapp;
-import bitcamp.myapp.vo.Assignment;
+
 public class AssignmentMenu {
 
   static Assignment[] assignments = new Assignment[3];

@@ -6,11 +6,13 @@ public class MainMenu {
   static final String ANSI_BOLD_RED = "\033[1;31m";
   static final String ANSI_RED = "\033[0;31m";
   static final String APP_TITLE = ANSI_BOLD_RED + "[과제관리 시스템]" + ANSI_CLEAR;
+
   static final String[] MENUS = {
       "1. 과제",
       "2. 게시글",
       "3. 회원",
-      "4. 도움말",
+      "4. 가입인사",
+      "5. 도움말",
       ANSI_RED + "0. 종료" + ANSI_CLEAR
   };
 
@@ -23,6 +25,9 @@ public class MainMenu {
   }
 
   static void execute() {
+
+    BoardMenu boardMenu = new BoardMenu("게시판");
+    BoardMenu greetingBoardMenu = new BoardMenu("가입인사");
     printMenu();
 
     while (true) {
@@ -33,14 +38,15 @@ public class MainMenu {
           AssignmentMenu.execute();
           break;
         case "2":
-          BoardMenu.execute();
+          boardMenu.execute();
           break;
         case "3":
-          //
-          UserMenu.execute();
-          //
+          MemberMenu.execute();
           break;
         case "4":
+          greetingBoardMenu.execute();
+          break;
+        case "5":
           System.out.println("도움말입니다.");
           break;
         case "0":
