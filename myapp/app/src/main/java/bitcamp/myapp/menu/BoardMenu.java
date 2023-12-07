@@ -1,13 +1,18 @@
-package bitcamp.myapp;
+package bitcamp.myapp.menu;
+
+import bitcamp.util.Prompt;
+import bitcamp.myapp.vo.Board;
 
 public class BoardMenu {
 
+  Prompt prompt;
   String title;
   Board[] boards = new Board[3];
   int length = 0;
 
-  BoardMenu(String title){
+  BoardMenu(String title, Prompt prompt){
     this.title = title;
+    this.prompt = prompt;
   }
 
   void printMenu() {
@@ -23,7 +28,7 @@ public class BoardMenu {
   void execute() {
     this.printMenu();
     while (true) {
-      String input = Prompt.input("메인/%s> ",this.title);
+      String input = this.prompt.input("메인/%s> ",this.title);
 
       switch (input) {
         case "1":
@@ -68,10 +73,10 @@ public class BoardMenu {
     }
 
     Board board = new Board();
-    board.title = Prompt.input("제목? ");
-    board.content = Prompt.input("내용? ");
-    board.writer = Prompt.input("작성자? ");
-    board.createdDate = Prompt.input("작성일? ");
+    board.title = this.prompt.input("제목? ");
+    board.content = this.prompt.input("내용? ");
+    board.writer = this.prompt.input("작성자? ");
+    board.createdDate = this.prompt.input("작성일? ");
 
     boards[length++] = board;
   }
@@ -89,7 +94,7 @@ public class BoardMenu {
   void view() {
     System.out.println("게시글 조회:");
 
-    int index = Integer.parseInt(Prompt.input("번호? "));
+    int index = this.prompt.inputInt("번호? ");
     if (index < 0 || index >= this.length) {
       System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
@@ -105,23 +110,23 @@ public class BoardMenu {
   void modify() {
     System.out.println("게시글 변경:");
 
-    int index = Integer.parseInt(Prompt.input("번호? "));
+    int index = this.prompt.inputInt("번호? ");
     if (index < 0 || index >= this.length) {
       System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
     }
 
     Board board =this.boards[index];
-    board.title = Prompt.input("제목(%s)? ", board.title);
-    board.content = Prompt.input("내용(%s)? ", board.content);
-    board.writer = Prompt.input("작성자(%s)? ", board.writer);
-    board.createdDate = Prompt.input("작성일(%s)? ", board.createdDate);
+    board.title = this.prompt.input("제목(%s)? ", board.title);
+    board.content = this.prompt.input("내용(%s)? ", board.content);
+    board.writer = this.prompt.input("작성자(%s)? ", board.writer);
+    board.createdDate = this.prompt.input("작성일(%s)? ", board.createdDate);
   }
 
   void delete() {
     System.out.println("게시글 삭제:");
 
-    int index = Integer.parseInt(Prompt.input("번호? "));
+    int index = this.prompt.inputInt("번호? ");
     if (index < 0 || index >= this.length) {
       System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
