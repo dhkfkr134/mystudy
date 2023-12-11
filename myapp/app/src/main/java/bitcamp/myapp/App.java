@@ -1,5 +1,6 @@
 package bitcamp.myapp;
 
+import bitcamp.myapp.Menu.MainMenu;
 import bitcamp.util.Prompt;
 
 public class App {

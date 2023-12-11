@@ -1,4 +1,4 @@
-package bitcamp.myapp;
+package bitcamp.myapp.Menu;
 
 import bitcamp.myapp.Menu.AssignmentMenu;
 import bitcamp.myapp.Menu.BoardMenu;
@@ -6,7 +6,7 @@ import bitcamp.myapp.Menu.MemberMenu;
 import bitcamp.util.AnsiEscape;
 import bitcamp.util.Prompt;
 
-public class MainMenu {
+public class MainMenu implements Menu{
 
   Prompt prompt;
 
@@ -32,12 +32,13 @@ public class MainMenu {
     }
   }
 
-  void execute() {
+  public void execute() {
 
     AssignmentMenu assignmentMenu = new AssignmentMenu("과제",this.prompt);
     BoardMenu boardMenu = new BoardMenu("게시글",this.prompt);
     BoardMenu greedingMenu = new BoardMenu("가입 인사",this.prompt);
     MemberMenu memberMenu = new MemberMenu("회원",this.prompt);
+    HelpMenu helpMenu = new HelpMenu("도움말",this.prompt);
     printMenu();
 
     while (true) {
@@ -57,7 +58,7 @@ public class MainMenu {
           greedingMenu.execute();
           break;
         case "5":
-          System.out.println("도움말입니다.");
+          helpMenu.execute();
           break;
         case "0":
           System.out.println("종료합니다.");

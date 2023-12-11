@@ -3,7 +3,7 @@ package bitcamp.myapp.Menu;
 import bitcamp.myapp.vo.Assignment;
 import bitcamp.util.Prompt;
 
-public class AssignmentMenu {
+public class AssignmentMenu implements Menu {
 
   Prompt prompt;
   String title;
