@@ -1,9 +1,10 @@
 package bitcamp.myapp.Menu;
 
+import bitcamp.menu.Menu;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
 
-public class BoardMenu implements Menu{
+public class BoardMenu implements Menu {
 
   Prompt prompt;
   String title;

@@ -1,12 +1,10 @@
 package bitcamp.myapp.Menu;
 
-import bitcamp.myapp.Menu.AssignmentMenu;
-import bitcamp.myapp.Menu.BoardMenu;
-import bitcamp.myapp.Menu.MemberMenu;
+import bitcamp.menu.Menu;
 import bitcamp.util.AnsiEscape;
 import bitcamp.util.Prompt;
 
-public class MainMenu implements Menu{
+public class MainMenu implements Menu {
 
   Prompt prompt;
 

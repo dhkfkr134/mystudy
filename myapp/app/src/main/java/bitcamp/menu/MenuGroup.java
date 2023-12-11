@@ -1,6 +1,5 @@
-package bitcamp.myapp.Menu;
+package bitcamp.menu;
 
-import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
 
 //Composite 패텀에서 '복합 객체(spositeobject) 역할을 하는 클래스
