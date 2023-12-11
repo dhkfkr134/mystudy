@@ -1,7 +1,7 @@
-package bitcamp.myapp.menu;
+package bitcamp.myapp.Menu;
 
-import bitcamp.util.Prompt;
 import bitcamp.myapp.vo.Board;
+import bitcamp.util.Prompt;
 
 public class BoardMenu {
 
@@ -10,13 +10,12 @@ public class BoardMenu {
   Board[] boards = new Board[3];
   int length = 0;
 
-  BoardMenu(String title, Prompt prompt){
+  public BoardMenu(String title, Prompt prompt){
     this.title = title;
     this.prompt = prompt;
   }
-
   void printMenu() {
-    System.out.printf("[%s]\n", this.title);
+    System.out.printf("[%s]\n",this.title);
     System.out.println("1. 등록");
     System.out.println("2. 조회");
     System.out.println("3. 변경");
@@ -25,8 +24,10 @@ public class BoardMenu {
     System.out.println("0. 이전");
   }
 
-  void execute() {
+  public void execute() {
+
     this.printMenu();
+
     while (true) {
       String input = this.prompt.input("메인/%s> ",this.title);
 
@@ -94,7 +95,7 @@ public class BoardMenu {
   void view() {
     System.out.println("게시글 조회:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
@@ -110,13 +111,13 @@ public class BoardMenu {
   void modify() {
     System.out.println("게시글 변경:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
     }
 
-    Board board =this.boards[index];
+    Board board = this.boards[index];
     board.title = this.prompt.input("제목(%s)? ", board.title);
     board.content = this.prompt.input("내용(%s)? ", board.content);
     board.writer = this.prompt.input("작성자(%s)? ", board.writer);
@@ -126,7 +127,7 @@ public class BoardMenu {
   void delete() {
     System.out.println("게시글 삭제:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("게시글 번호가 유효하지 않습니다.");
       return;

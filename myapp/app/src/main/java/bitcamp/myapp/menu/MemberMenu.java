@@ -1,16 +1,17 @@
-package bitcamp.myapp.menu;
+package bitcamp.myapp.Menu;
 
-import bitcamp.util.Prompt;
 import bitcamp.myapp.vo.Member;
+import bitcamp.util.Prompt;
 
 public class MemberMenu {
 
-  String title;
   Prompt prompt;
+
+  String title;
   Member[] members = new Member[3];
   int length = 0;
 
-  public MemberMenu(String title,Prompt prompt){
+  public MemberMenu(String title, Prompt prompt){
     this.title = title;
     this.prompt = prompt;
   }
@@ -25,27 +26,28 @@ public class MemberMenu {
     System.out.println("0. 이전");
   }
 
-  void execute() {
+  public void execute() {
 
     this.printMenu();
+
     while (true) {
       String input = this.prompt.input("메인/%s> ",this.title);
 
       switch (input) {
         case "1":
-          add();
+          this.add();
           break;
         case "2":
-          view();
+          this.view();
           break;
         case "3":
-          modify();
+          this.modify();
           break;
         case "4":
-          delete();
+          this.delete();
           break;
         case "5":
-          list();
+          this.list();
           break;
         case "0":
           return;
@@ -77,25 +79,25 @@ public class MemberMenu {
     member.email = this.prompt.input("이메일? ");
     member.name = this.prompt.input("이름? ");
     member.password = this.prompt.input("암호? ");
-    member.createdDate = this.prompt.input("가입일? ");
+    member.createdDate = this.prompt.input("생성일자? ");
 
-    members[length++] = member;
+    this.members[this.length++] = member;
   }
 
-   void list() {
+  void list() {
     System.out.println("회원 목록:");
-    System.out.printf("%-10s\t%30s\t%s\n", "이름", "이메일", "가입일");
+    System.out.printf("%-20s\t%10s\t%s\n", "Email", "Name", "CreatedDate");
 
     for (int i = 0; i < this.length; i++) {
       Member member = this.members[i];
-      System.out.printf("%-10s\t%30s\t%s\n", member.name, member.email, member.createdDate);
+      System.out.printf("%-20s\t%10s\t%s\n", member.email, member.name, member.createdDate);
     }
   }
 
   void view() {
     System.out.println("회원 조회:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("회원 번호가 유효하지 않습니다.");
       return;
@@ -104,13 +106,14 @@ public class MemberMenu {
     Member member = this.members[index];
     System.out.printf("이메일: %s\n", member.email);
     System.out.printf("이름: %s\n", member.name);
-    System.out.printf("가입일: %s\n", member.createdDate);
+    System.out.printf("암호: %s\n", member.password);
+    System.out.printf("생성일자: %s\n", member.createdDate);
   }
 
   void modify() {
     System.out.println("회원 변경:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("회원 번호가 유효하지 않습니다.");
       return;
@@ -119,14 +122,14 @@ public class MemberMenu {
     Member member = this.members[index];
     member.email = this.prompt.input("이메일(%s)? ", member.email);
     member.name = this.prompt.input("이름(%s)? ", member.name);
-    member.password = this.prompt.input("새 암호? ");
-    member.createdDate = this.prompt.input("가입일(%s)? ", member.createdDate);
+    member.password = this.prompt.input("암호(%s)? ", member.password);
+    member.createdDate = this.prompt.input("생성일자(%s)? ", member.createdDate);
   }
 
   void delete() {
     System.out.println("회원 삭제:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("회원 번호가 유효하지 않습니다.");
       return;

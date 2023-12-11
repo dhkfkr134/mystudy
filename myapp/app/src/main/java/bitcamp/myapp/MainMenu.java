@@ -1,5 +1,8 @@
-package bitcamp.myapp.menu;
+package bitcamp.myapp;
 
+import bitcamp.myapp.Menu.AssignmentMenu;
+import bitcamp.myapp.Menu.BoardMenu;
+import bitcamp.myapp.Menu.MemberMenu;
 import bitcamp.util.AnsiEscape;
 import bitcamp.util.Prompt;
 
@@ -7,23 +10,20 @@ public class MainMenu {
 
   Prompt prompt;
 
-  static final String APP_TITLE = AnsiEscape.ANSI_BOLD_RED
-      + "[과제관리 시스템]"
-      + AnsiEscape.ANSI_CLEAR;
 
+  static final String APP_TITLE = AnsiEscape.ANSI_BOLD_RED + "[과제관리 시스템]" + AnsiEscape.ANSI_CLEAR;
   static final String[] MENUS = {
       "1. 과제",
       "2. 게시글",
       "3. 회원",
-      "4. 가입인사",
+      "4. 가입 인사",
       "5. 도움말",
       AnsiEscape.ANSI_RED + "0. 종료" + AnsiEscape.ANSI_CLEAR
   };
-
-
   public MainMenu(Prompt prompt){
     this.prompt = prompt;
   }
+
   static void printMenu() {
     System.out.println(APP_TITLE);
     System.out.println();
@@ -31,10 +31,12 @@ public class MainMenu {
       System.out.println(menu);
     }
   }
-  public void execute() {
-    BoardMenu boardMenu = new BoardMenu("게시판",this.prompt);
-    BoardMenu greetingBoardMenu = new BoardMenu("가입인사",this.prompt);
+
+  void execute() {
+
     AssignmentMenu assignmentMenu = new AssignmentMenu("과제",this.prompt);
+    BoardMenu boardMenu = new BoardMenu("게시글",this.prompt);
+    BoardMenu greedingMenu = new BoardMenu("가입 인사",this.prompt);
     MemberMenu memberMenu = new MemberMenu("회원",this.prompt);
     printMenu();
 
@@ -52,7 +54,7 @@ public class MainMenu {
           memberMenu.execute();
           break;
         case "4":
-          greetingBoardMenu.execute();
+          greedingMenu.execute();
           break;
         case "5":
           System.out.println("도움말입니다.");

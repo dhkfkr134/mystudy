@@ -1,19 +1,20 @@
-package bitcamp.myapp.menu;
+package bitcamp.myapp.Menu;
 
-import bitcamp.util.Prompt;
 import bitcamp.myapp.vo.Assignment;
+import bitcamp.util.Prompt;
 
 public class AssignmentMenu {
 
-  String title;
   Prompt prompt;
+  String title;
   Assignment[] assignments = new Assignment[3];
   int length = 0;
 
-  public AssignmentMenu(String title,Prompt prompt){
+  public AssignmentMenu(String title, Prompt prompt){
     this.title = title;
     this.prompt = prompt;
   }
+
   void printMenu() {
     System.out.printf("[%s]\n",this.title);
     System.out.println("1. 등록");
@@ -24,7 +25,7 @@ public class AssignmentMenu {
     System.out.println("0. 이전");
   }
 
-  void execute() {
+  public void execute() {
     this.printMenu();
 
     while (true) {
@@ -32,19 +33,19 @@ public class AssignmentMenu {
 
       switch (input) {
         case "1":
-          add();
+          this.add();
           break;
         case "2":
-          view();
+          this.view();
           break;
         case "3":
-          modify();
+          this.modify();
           break;
         case "4":
-          delete();
+          this.delete();
           break;
         case "5":
-          list();
+          this.list();
           break;
         case "0":
           return;
@@ -58,7 +59,7 @@ public class AssignmentMenu {
   }
 
   void add() {
-    System.out.println("과제 등록:");
+    System.out.printf("%s 등록:\n",this.title);
 
     if (this.length == this.assignments.length) {
       //System.out.println("과제를 더이상 등록할 수 없습니다.");
@@ -80,12 +81,11 @@ public class AssignmentMenu {
     assignment.content = this.prompt.input("내용? ");
     assignment.deadline = this.prompt.input("제출 마감일? ");
 
-    assignments[length] = assignment;
-    length++;
+    this.assignments[this.length++] = assignment;
   }
 
   void list() {
-    System.out.println("과제 목록:");
+    System.out.printf("%s 목록:\n",this.title);
     System.out.printf("%-20s\t%s\n", "과제", "제출마감일");
 
     for (int i = 0; i < this.length; i++) {
@@ -95,9 +95,9 @@ public class AssignmentMenu {
   }
 
   void view() {
-    System.out.println("과제 조회:");
+    System.out.printf("%s 조회:\n",this.title);
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("과제 번호가 유효하지 않습니다.");
       return;
@@ -112,7 +112,7 @@ public class AssignmentMenu {
   void modify() {
     System.out.println("과제 변경:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("과제 번호가 유효하지 않습니다.");
       return;
@@ -127,7 +127,7 @@ public class AssignmentMenu {
   void delete() {
     System.out.println("과제 삭제:");
 
-    int index = this.prompt.inputInt("번호? ");
+    int index = Integer.parseInt(this.prompt.input("번호? "));
     if (index < 0 || index >= this.length) {
       System.out.println("과제 번호가 유효하지 않습니다.");
       return;
@@ -136,7 +136,6 @@ public class AssignmentMenu {
     for (int i = index; i < (this.length - 1); i++) {
       this.assignments[i] = this.assignments[i + 1]; // 다음 레퍼런스의 값을 삭제하려는 현재 레퍼런스로 이동
     }
-    this.length--;
-    this.assignments[this.length] = null;
+    this.assignments[--this.length] = null;
   }
 }
