@@ -26,7 +26,11 @@ public class MemberMenu implements Menu{
     System.out.println("0. 이전");
   }
 
-  public void execute() {
+  @Override
+  public String getTitle() {
+    return null;
+  }
+  public void execute(Prompt prompt) {
 
     this.printMenu();
 
