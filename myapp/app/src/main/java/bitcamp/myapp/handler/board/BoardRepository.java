@@ -1,4 +1,4 @@
-package bitcamp.myapp.Menu;
+package bitcamp.myapp.handler.board;
 
 import bitcamp.myapp.vo.Board;
 

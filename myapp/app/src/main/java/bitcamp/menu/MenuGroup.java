@@ -63,7 +63,6 @@ public class MenuGroup implements Menu{
 
       this.menus = arr;
     }
-
     this.menus[this.menuSize++] = menu;
   }
 

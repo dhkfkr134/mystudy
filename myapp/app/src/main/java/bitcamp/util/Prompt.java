@@ -11,7 +11,7 @@ public class Prompt {
     return keyIn.nextLine();
   }
 
-  int inputInt(String title, Object... args) {
+  public  int inputInt(String title, Object... args) {
     return Integer.parseInt(this.input(title,args));
   }
   Float inputFloat(String title, Object... args) {

@@ -1,20 +1,17 @@
-package bitcamp.myapp.Menu;
+package bitcamp.myapp.handler.board;
 
 import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Board;
-import bitcamp.util.Prompt;
 
 // 게시글의 '목록'메뉴를 선택했을 때 작업을 수행하는 클래스
 // - 반드시 Menuhandler 규칙에 따라 클래스를 작성해야 한다.
 //
 public class BoardListHandler implements MenuHandler {
 
-  Prompt prompt;
   BoardRepository boardRepository;
 
-  public BoardListHandler(BoardRepository boardRepository, Prompt prompt) {
+  public BoardListHandler(BoardRepository boardRepository) {
     this.boardRepository = boardRepository;
-    this.prompt = prompt;
   }
     @Override
     public void action() {

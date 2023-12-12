@@ -1,4 +1,4 @@
-package bitcamp.myapp.Menu;
+package bitcamp.myapp.handler;
 import bitcamp.menu.Menu;
 import bitcamp.util.Prompt;
 public class HelpMenu implements Menu {
