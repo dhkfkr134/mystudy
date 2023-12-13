@@ -1,31 +1,31 @@
-package bitcamp.myapp.handler;
+package bitcamp.myapp.handler.assignment;
 
+import bitcamp.menu.Menu;
 import bitcamp.menu.MenuHandler;
+import bitcamp.myapp.vo.Assignment;
+import bitcamp.util.AnsiEscape;
+import bitcamp.util.ObjectRepository;
 import bitcamp.util.Prompt;
-
+import java.util.ArrayList;
 
 public class AssignmentDeleteHandler implements MenuHandler {
-  AssignmentRepository assignmentRepository;
-  Prompt prompt;
 
-  public AssignmentDeleteHandler(AssignmentRepository assignmentRepository, Prompt prompt) {
-    this.assignmentRepository = assignmentRepository;
+  Prompt prompt;
+  ArrayList<Assignment> objectRepository;
+
+
+  public AssignmentDeleteHandler(ArrayList<Assignment> objectRepository, Prompt prompt) {
+    this.objectRepository = objectRepository;
     this.prompt = prompt;
   }
 
   @Override
-  public void action() {
-    System.out.println("과제 삭제:");
+  public void action(Menu menu) {
+    System.out.printf(AnsiEscape.ANSI_BOLD + "[%s]\n" + AnsiEscape.ANSI_CLEAR, menu.getTitle());
 
-    int index = Integer.parseInt(this.prompt.input("번호? "));
-    if (index < 0 || index >= this.assignmentRepository.length) {
+    int index = this.prompt.inputInt("번호? ");
+    if (this.objectRepository.remove(index) == null) {
       System.out.println("과제 번호가 유효하지 않습니다.");
-      return;
     }
-
-    for (int i = index; i < (this.assignmentRepository.length - 1); i++) {
-      this.assignmentRepository.assignments[i] = this.assignmentRepository.assignments[i + 1]; // 다음 레퍼런스의 값을 삭제하려는 현재 레퍼런스로 이동
-    }
-    this.assignmentRepository.assignments[--this.assignmentRepository.length] = null;
   }
 }

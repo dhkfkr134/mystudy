@@ -1,41 +1,33 @@
-package bitcamp.myapp.handler;
+package bitcamp.myapp.handler.assignment;
 
+import bitcamp.menu.Menu;
 import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Assignment;
-import bitcamp.myapp.vo.Board;
+import bitcamp.util.AnsiEscape;
+import bitcamp.util.ObjectRepository;
 import bitcamp.util.Prompt;
+import java.util.ArrayList;
 
 public class AssignmentAddHandler implements MenuHandler {
 
-  AssignmentRepository assignmentRepository;
   Prompt prompt;
+  ArrayList<Assignment> objectrepository;
 
-  public AssignmentAddHandler(AssignmentRepository assignmentRepository, Prompt prompt){
-    this.assignmentRepository = assignmentRepository;
+
+  public AssignmentAddHandler(ArrayList<Assignment> objectRepository, Prompt prompt) {
+    this.objectrepository = objectRepository;
     this.prompt = prompt;
   }
+
   @Override
-  public void action(){
-    System.out.println("과제: ");
-
-    if(this.assignmentRepository.length == this.assignmentRepository.assignments.length){
-      int oldSize = this.assignmentRepository.assignments.length;
-      int newSize = oldSize + (oldSize >> 1);
-
-      Assignment[] arr = new Assignment[newSize];
-      for (int i = 0; i < oldSize; i++) {
-        arr[i] = this.assignmentRepository.assignments[i];
-      }
-
-      this.assignmentRepository.assignments = arr;
-    }
+  public void action(Menu menu) {
+    System.out.printf(AnsiEscape.ANSI_BOLD + "[%s]\n" + AnsiEscape.ANSI_CLEAR, menu.getTitle());
 
     Assignment assignment = new Assignment();
     assignment.title = this.prompt.input("과제명? ");
     assignment.content = this.prompt.input("내용? ");
     assignment.deadline = this.prompt.input("제출 마감일? ");
 
-    assignmentRepository.assignments[assignmentRepository.length++] = assignment;
-    }
-
+    this.objectrepository.add(assignment);
+  }
 }
