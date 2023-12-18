@@ -1,27 +1,38 @@
 package bitcamp.util;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Prompt {
 
-  Scanner keyIn = new Scanner(System.in);
+  Scanner keyIn;
+
+  public Prompt(InputStream in) {
+
+    keyIn = new Scanner(in);
+  }
 
   public String input(String title, Object... args) {
     System.out.print(String.format(title, args));
-    return keyIn.nextLine();
+    return this.keyIn.nextLine();
   }
 
-  public  int inputInt(String title, Object... args) {
-    return Integer.parseInt(this.input(title,args));
+  public int inputInt(String title, Object... args) {
+    String str = this.input(title, args);
+    return Integer.parseInt(str);
   }
-  Float inputFloat(String title, Object... args) {
-    return Float.parseFloat(this.input(title,args));
+
+  public float inputFloat(String title, Object... args) {
+    String str = this.input(title, args);
+    return Float.parseFloat(str);
   }
-  Boolean inputBoolean(String title, Object... args) {
-    return Boolean.parseBoolean(this.input(title,args));
+
+  public boolean inputBoolean(String title, Object... args) {
+    String str = this.input(title, args);
+    return Boolean.parseBoolean(str);
   }
 
   public void close() {
-    keyIn.close();
+    this.keyIn.close();
   }
 }

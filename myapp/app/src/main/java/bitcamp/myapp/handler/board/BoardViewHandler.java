@@ -4,7 +4,6 @@ import bitcamp.menu.Menu;
 import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.AnsiEscape;
-import bitcamp.util.ObjectRepository;
 import bitcamp.util.Prompt;
 import java.util.ArrayList;
 

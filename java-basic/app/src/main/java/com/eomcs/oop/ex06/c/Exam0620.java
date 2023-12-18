@@ -64,10 +64,10 @@ class DumpTruckFactory2 extends TruckFactory {
   // 메서드를 오버라이딩 할 때 리턴 타입으로 수퍼 클래스는 불가능하다.
   // => 컴파일 오류!
   //
-  //  @Override
-  //  Car makeCar() {
-  //    return new Car();
-  //  };
+    @Override
+    Car makeCar() {
+      return new Car();
+    };
 }
 
 
