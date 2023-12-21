@@ -9,7 +9,7 @@ import bitcamp.util.Prompt;
 //
 public class MenuItem extends AbstractMenu {
 
-  private MenuHandler menuHandler;
+  MenuHandler menuHandler;
 
   public MenuItem(String title) {
     super(title);
@@ -25,5 +25,4 @@ public class MenuItem extends AbstractMenu {
       this.menuHandler.action(this);
     }
   }
-
 }
