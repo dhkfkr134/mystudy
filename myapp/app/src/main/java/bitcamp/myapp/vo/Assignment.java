@@ -1,10 +1,12 @@
 package bitcamp.myapp.vo;
 
+import java.sql.Date;
+
 public class Assignment {
 
   private String title;
   private String content;
-  private String deadline;
+  private Date deadline;
 
   public void setTitle(String title) {
     this.title = title;
@@ -14,7 +16,7 @@ public class Assignment {
     this.content = content;
   }
 
-  public void setDeadline(String deadline) {
+  public void setDeadline(Date deadline) {
     this.deadline = deadline;
   }
 
@@ -26,7 +28,7 @@ public class Assignment {
     return content;
   }
 
-  public String getDeadline() {
+  public Date getDeadline() {
     return deadline;
   }
 }
