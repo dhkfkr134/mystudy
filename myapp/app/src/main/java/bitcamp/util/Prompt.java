@@ -19,12 +19,11 @@ public class Prompt {
   }
 
   public int inputInt(String title, Object... args) {
-    return Integer.parseInt(this.input(title, args));
+      return Integer.parseInt(this.input(title, args));
   }
 
   public float inputFloat(String title, Object... args) {
-    String str = this.input(title, args);
-    return Float.parseFloat(str);
+    return Float.parseFloat(this.input(title, args));
   }
 
   public boolean inputBoolean(String title, Object... args) {
@@ -32,7 +31,6 @@ public class Prompt {
   }
 
   public Date inputDate(String title, Object... args) {
-    String str = this.input(title, args);
     return Date.valueOf(this.input(title, args));
   }
 
