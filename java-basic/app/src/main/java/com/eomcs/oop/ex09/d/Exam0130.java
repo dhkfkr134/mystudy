@@ -50,6 +50,7 @@ class Tico implements CarSpec {
 
   @Override
   public void on() {
+    
     System.out.println("시동 켠다!");
   }
 
