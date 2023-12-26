@@ -35,7 +35,7 @@ dependencies {
 // 소스 파일이 어떤 자바 버전으로 되어 있는지 Gradle에게 알려준다.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -57,8 +57,8 @@ tasks.withType(JavaCompile).configureEach {
     // windows는 인코딩방식이 utf-8이 아니라 한글이 깨질 수 있다.
     // utf-8로 바까주자
     options.encoding = 'UTF-8'
-    sourceCompatibility = '17'
-    targetCompatibility = '17'
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
 }
 run {
     standardInput = System.in
@@ -70,8 +70,8 @@ eclipse {
         name = "java-basic"
     }
     jdt {
-      sourceCompatibility = 17
-      targetCompatibility = 17
-      javaRuntimeName = "JavaSE-17"
+      sourceCompatibility = 21
+      targetCompatibility = 21
+      javaRuntimeName = "JavaSE-21"
     }
 }
