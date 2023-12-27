@@ -15,6 +15,7 @@ public class Exam0650 {
 
   public static void main(String[] args) throws Exception {
     B obj2 = null;
+    B c = new B();
 
     try (
         obj2 = new B(); // 컴파일 오류!
