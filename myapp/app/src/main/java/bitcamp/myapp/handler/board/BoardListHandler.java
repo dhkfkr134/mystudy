@@ -5,6 +5,7 @@ import bitcamp.menu.Menu;
 import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.AnsiEscape;
+import bitcamp.util.List;
 import bitcamp.util.Prompt;
 import java.util.ArrayList;
 
@@ -13,9 +14,9 @@ import java.util.ArrayList;
 //
 public class BoardListHandler extends AbstractMenuHandler {
 
-  private ArrayList<Board> objectRepository;
+  private List<Board> objectRepository;
 
-  public BoardListHandler(ArrayList<Board> objectRepository, Prompt prompt) {
+  public BoardListHandler(List<Board> objectRepository, Prompt prompt) {
     super(prompt);
     this.objectRepository = objectRepository;
   }

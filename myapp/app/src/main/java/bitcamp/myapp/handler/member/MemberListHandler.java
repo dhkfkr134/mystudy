@@ -5,14 +5,15 @@ import bitcamp.menu.Menu;
 import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.AnsiEscape;
+import bitcamp.util.List;
 import bitcamp.util.Prompt;
 import java.util.ArrayList;
 
 public class MemberListHandler extends AbstractMenuHandler {
 
-  private ArrayList<Member> objectRepository;
+  private List<Member> objectRepository;
 
-  public MemberListHandler(ArrayList<Member> objectRepository, Prompt prompt) {
+  public MemberListHandler(List<Member> objectRepository, Prompt prompt) {
     super(prompt);
     this.objectRepository = objectRepository;
   }

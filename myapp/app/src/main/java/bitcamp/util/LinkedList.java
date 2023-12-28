@@ -2,13 +2,10 @@ package bitcamp.util;
 
 import java.util.Arrays;
 
-public class LinkedList<E> {
-
-
-
+public class LinkedList<E> extends AbstractList<E> {
   private Node<E> first;
   private Node<E> last;
-  private int size;
+
 
   public void add(E value) {
     Node<E> node = new Node<E>();
@@ -98,9 +95,7 @@ public class LinkedList<E> {
     size++;
   }
 
-  public int size() {
-    return size;
-  }
+
 
   public E remove(int index) {
     if (index < 0 || index >= size) {

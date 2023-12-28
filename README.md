@@ -182,3 +182,98 @@
 - 리팩토링
   - ANSI Escape Sequence 값을 별도의 클래스로 분리
   - 역할에 따라 클래스를 패키지로 나눠서 분류 
+
+
+## 16. 인터페이스를 이용한 객체 사용 규칙 정의
+
+- 인터페이스 문법으로 메뉴를 다루는 객체의 실행 규칙 정의
+- 인터페이스에 정의한 대로 메뉴를 다루는 객체를 구현
+- 인터페이스에 정의한 대로 메뉴를 다루는 객체를 실행
+
+
+## 17. 인터페이스와 GoF의 Composite 패턴을 이용하여 메뉴를 구현하기
+
+- GoF의 Composite 디자인 패턴 적용
+  - 메뉴 간의 연결을 느슨하게 조정하기
+  - 현황:
+    - MainMenu와 나머지 Menu 객체들 사이에 coupling이 강결합되어 있다.
+    - 메뉴 클래스를 추가하면 MainMenu 클래스를 또 변경해야 한다.
+  - 목표:
+    - 메뉴를 추가하더라도 기존 클래스를 변경하지 않을 방법이 필요하다.
+  - 객체지향 설계 원칙 및 OOP 개념:
+    - SOLID의 'OCP(Open/Closed Priciple)' 준수
+    - GRASP의 'Low Coupling' 책임 할당 원칙 준수
+
+## 18. 인스턴스 목록 제어 기능을 별도의 클래스로 캡슐화: 재사용성 높임
+
+- 핸들러 객체에서 수행하는 배열 다루는 일을 실제 배열을 가지고 있는 Repository 객체로 이관하기
+  - 현황:
+    - Repository 클래스의 배열 레퍼런스를 Handler에서 다루고 있다.
+  - 목표:
+    - 인스턴스를 다루는 기능을 다른 프로젝트에서도 재사용할 수 있게 만들고 싶다.
+  - 객체지향 설계 원칙 및 OOP 개념:
+    - GRASP의 Information Expert 책임 할당 원칙 준수
+    - GRASP의 High Cohesion 책임 할당 원칙 준수
+    - OOP의 Encapsulation(캡슐화)
+  - 효과: 
+    - 배열을 다루는 코드를 별도의 객체로 분리하면 코드 재사용이 쉬워진다.
+    - 객체의 역할을 전문화함으로써 코드를 관리하기가 쉬워진다. 
+    - 목록을 다루는 방식을 감추고 대신 외부에 공개된 도구(메서드)를 통해 목록을 사용하도록 유도하면,
+      목록을 다루는 방식을 변경하더라도 외부에 영향을 주지 않는다.
+      즉 기능을 변경하더라도 다른 클래스에 미치는 영향을 최소화시킬 수 있다.
+
+## 19. 다형성을 이용하여 범용으로 사용할 수 있는 Repository 클래스 만들기
+
+- 목록 관리 범용 클래스 ObjectRepository 정의
+  - 다형성의 polymorphic variable 문법 활용
+- 기존의 Repository 클래스를 ObjectRepository로 대체
+
+## 20. 제네릭을 사용하여 타입을 파라미터로 다루기
+
+- ObjectRepository에 제네릭 적용하기
+  - 범용 클래스를 특정 타입을 다루는 클래스로 제한할 수 있다.
+  - 파라미터 값에 대해 특정 타입으로 한정할 수 있다.
+  - 반환값의 타입을 형변환 할 필요가 없다.
+- T[] toArray(T[]) 메서드 추가하기
+  - System.arraycopy() 메서드 사용하기
+  - Arrays.copyOf() 메서드 사용하기
+
+## 21. 자바 Collection API 사용하기 - ArrayList 적용
+
+- 목록을 다루는 기존 Repository 클래스를 자바 컬렉션 API 로 교체
+
+## 22. 접근 제어 modifier 및 셋터, 겟터 도입하기
+
+- 인스턴스 필드에 직접 접근하는 것을 막는 방법: private
+- 인스턴스 필드에 값을 저장하고 꺼내는 방법: setter/getter
+
+## 23. 상속(generalization)과 추상 클래스/추상 메서드, 접근 제어 활용하기
+
+- MenuItem과 MenuGroup의 공통 코드를 추출하여 수퍼 클래스를 정의하기
+- MenuHandler 구현체의 공통 분모를 추출하여 수퍼 클래스 정의하기
+- 수퍼 클래스를 추상 클래스로 정의하여 직접 사용을 막기
+- 추상 메서드를 선언하여 서브 클래스에게 구현을 강요하기
+- 서브 클래스가 의존 객체를 사용할 수 있도록 접근 범위를 protected로 설정하기
+
+## 24. Date 클래스를 사용하여 날짜 데이터를 다루기
+
+- java.util.Date/java.sql.Date 클래스를 활용하기
+
+## 25. 예외 처리하기
+
+- 예외가 발생했을 때 시스템을 멈추기 않게 하는 방법
+- try ~ catch ~ finally 사용법
+
+## 26. LinkedList 자료구조 구현하기
+
+- 목록 관리 범용 클래스 LinkedList 정의
+  - LinkedList 구동원리 이해 및 구현
+  - 중첩 클래스 활용: static 중첩 클래스 Node 정의
+  - 제네릭 적용
+- MenuGroup에 적용
+- Handler에 적용
+  - List 구현체를 생성자를 통해 주입: DI(Dependency Injection) 적용
+- List 객체 사용 규칙 정의
+  - ArrayList, LinkedList에 List 인터페이스 적용
+- AbstractList 추상 클래스 적용 
+  - ArrayList, LinkedList에 AbstractList 추상 클래스 적용
