@@ -1,5 +1,7 @@
 package bitcamp.util;
 
+import java.util.Arrays;
+
 public class LinkedList<E> {
 
 
@@ -105,14 +107,15 @@ public class LinkedList<E> {
       throw new IndexOutOfBoundsException("무효한 인덱스입니다.");
     }
 
-    E old = null;
+    // 삭제될 노드객체
+    Node<E> deleted = null;
 
     if (size == 1) {
-      old = first.value;
+      deleted = first;
       first = last = null;
 
     } else if (index == 0) {
-      old = first.value;
+      deleted = first;
       first = first.next;
 
     } else {
@@ -121,16 +124,20 @@ public class LinkedList<E> {
       while (++cursor < index) {
         currNode = currNode.next;
       }
-      old = currNode.next.value;
+      deleted = currNode.next;
       currNode.next = currNode.next.next;
 
       if (index == (size - 1)) {
         last = currNode;
       }
     }
-
     size--;
-    return old;
+
+    //가비지가 되기 전에 다른 객체를 참조하던 것을 제거한다.
+    E old = deleted.value;
+    deleted.value = null;
+    deleted.next = null;
+    return deleted.value;
   }
 
   public boolean remove(E value){
@@ -154,12 +161,29 @@ public class LinkedList<E> {
       // 일치하는게 처음인데 size가1일때
       if( first == null){
         last = null;
+
       }
     } else{
       prevNode.next = node.next;
     }
     size --;
     return true;
+  }
+
+  public E[] toArray(final E[] arr){
+    E[] values = arr;
+    if (arr.length < size){
+      values = Arrays.copyOf(arr, size);
+    }
+
+    int i = 0;
+    Node<E> node = first;
+    while (node != null){
+      values[i++] = node.value;
+      node = node.next;
+    }
+
+    return values;
   }
 
   private static class Node<E> {
