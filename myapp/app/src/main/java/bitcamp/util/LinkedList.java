@@ -132,7 +132,7 @@ public class LinkedList<E> extends AbstractList<E> {
     E old = deleted.value;
     deleted.value = null;
     deleted.next = null;
-    return deleted.value;
+    return old;
   }
 
   public boolean remove(E value){
@@ -185,6 +185,5 @@ public class LinkedList<E> extends AbstractList<E> {
     E value;
     Node<E> next;
   }
-
 }
 
