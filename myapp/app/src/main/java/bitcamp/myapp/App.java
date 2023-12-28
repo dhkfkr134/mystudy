@@ -38,7 +38,7 @@ public class App {
 
     // 메뉴의 경로를 저아할 스택 객체 준비
     Stack<String> breadcrumb = new Stack<>();
-    MenuGroup mainMenu = new MenuGroup("메인",breadcrumb);
+    MenuGroup mainMenu = MenuGroup.getInstance("메인");
 
     MenuGroup assignmentMenu = mainMenu.addGroup("과제");
     assignmentMenu.addItem("등록", new AssignmentAddHandler(assignmentRepository, prompt));
