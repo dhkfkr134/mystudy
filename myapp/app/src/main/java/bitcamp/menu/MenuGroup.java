@@ -1,5 +1,6 @@
 package bitcamp.menu;
 
+import bitcamp.util.Iterator;
 import bitcamp.util.LinkedList;
 import bitcamp.util.List;
 import bitcamp.util.Prompt;
@@ -23,7 +24,6 @@ public class MenuGroup extends AbstractMenu {
   public void execute(Prompt prompt) {
     // 메뉴를 실행할 때 제목을 경로에서 추가한다.
     breadcrumb.push(this.title);
-    System.out.println(menus.size());
     this.printMenu();
 
     while (true) {
@@ -54,8 +54,11 @@ public class MenuGroup extends AbstractMenu {
   private void printMenu() {
     System.out.printf("[%s]\n", this.getTitle());
 
-    for (int i = 0; i < this.menus.size(); i++) {
-      System.out.printf("%d. %s\n", (i + 1), menus.get(i).getTitle());
+    Iterator<Menu> iterator = this.menus.iterator();
+    int i = 1;
+    while (iterator.hasNext()){
+      Menu menu = iterator.next();
+      System.out.printf("%d. %s\n", i++,menu.getTitle());
     }
 
     System.out.printf("0. %s\n", "이전");

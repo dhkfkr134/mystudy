@@ -1,7 +1,5 @@
 package bitcamp.util;
 
-import java.util.Arrays;
-
 public interface List<E> {
 
   public void add(E object);
@@ -16,7 +14,9 @@ public interface List<E> {
 
   public E get(int index);
 
-  public E set(int index, E object);
+  E set(int index, E object);
 
-  public int size();
+  int size();
+
+  Iterator<E> iterator();
 }

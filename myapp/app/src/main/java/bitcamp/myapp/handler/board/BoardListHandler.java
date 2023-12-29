@@ -5,6 +5,7 @@ import bitcamp.menu.Menu;
 import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.AnsiEscape;
+import bitcamp.util.Iterator;
 import bitcamp.util.List;
 import bitcamp.util.Prompt;
 import java.util.ArrayList;
@@ -32,9 +33,10 @@ public class BoardListHandler extends AbstractMenuHandler {
 //    this.objectRepository.toArray(boards);
 
     // 방법2)
-    Board[] boards = this.objectRepository.toArray(new Board[0]);
+    Iterator<Board> iterator = this.objectRepository.iterator();
 
-    for (Board board : boards) {
+    while (iterator.hasNext()){
+      Board board = iterator.next();
       System.out.printf("%-20s\t%10s\t%3$tY-%3$tm-%3$td\n",
           board.getTitle(),
           board.getWriter(),

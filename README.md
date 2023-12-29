@@ -277,3 +277,9 @@
   - ArrayList, LinkedList에 List 인터페이스 적용
 - AbstractList 추상 클래스 적용 
   - ArrayList, LinkedList에 AbstractList 추상 클래스 적용
+
+## 27. Stack, Queue 자료구조 구현하기
+
+- Stack과 Queue의 구동원리 이해 및 구현
+- Stack 적용
+  - MenuGroup에 Stack을 이용하여 Breadcrumb 구현

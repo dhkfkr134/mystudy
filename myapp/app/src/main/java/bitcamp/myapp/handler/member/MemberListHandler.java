@@ -5,6 +5,7 @@ import bitcamp.menu.Menu;
 import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.AnsiEscape;
+import bitcamp.util.Iterator;
 import bitcamp.util.List;
 import bitcamp.util.Prompt;
 import java.util.ArrayList;
@@ -23,10 +24,10 @@ public class MemberListHandler extends AbstractMenuHandler {
 
     System.out.printf("%-10s\t%30s\t%s\n", "이름", "이메일", "가입일");
 
-    Member[] members = new Member[this.objectRepository.size()];
-    this.objectRepository.toArray(members);
+    Iterator<Member> iterator = this.objectRepository.iterator();
 
-    for (Member member : members) {
+    while (iterator.hasNext()) {
+      Member member = iterator.next();
       System.out.printf("%-10s\t%30s\t%s\n", member.getName(), member.getEmail(),
           member.getCreatedDate());
     }
