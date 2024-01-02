@@ -8,10 +8,27 @@ interface Calculator {
 
 class CalculatorFactory {
 
-  static Calculator create(float interest) {
+  static Calculator create1(float interest) {
 
     class CalculatorImpl implements Calculator {
+      float interest;
+      
+      CalculatorImpl(float interest){
+        this.interest = interest;
+      }
+      
+      @Override
+      public double compute(int money) {
+        return money + (money * interest);
+      }
+    }
 
+    return new CalculatorImpl(interest);
+  }
+  static Calculator create2(float interest) {
+
+    class CalculatorImpl implements Calculator {
+      
       @Override
       public double compute(int money) {
         return money + (money * interest);
@@ -31,8 +48,8 @@ class CalculatorFactory {
 public class Exam0310 {
 
   public static void main(String[] args) {
-    Calculator c1 = CalculatorFactory.create(0.02f);
-    Calculator c2 = CalculatorFactory.create(0.08f);
+    Calculator c1 = CalculatorFactory.create2(0.02f);
+    Calculator c2 = CalculatorFactory.create2(0.08f);
 
     System.out.printf("%.2f\n", c1.compute(1235_0000));
     System.out.printf("%.2f\n", c2.compute(1235_0000));
