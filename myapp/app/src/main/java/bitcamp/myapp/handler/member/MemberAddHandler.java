@@ -2,9 +2,9 @@ package bitcamp.myapp.handler.member;
 
 import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.List;
 import bitcamp.util.Prompt;
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MemberAddHandler extends AbstractMenuHandler {
 
@@ -16,13 +16,12 @@ public class MemberAddHandler extends AbstractMenuHandler {
   }
 
   @Override
-  public void action() {
-
+  protected void action() {
     Member member = new Member();
     member.setEmail(this.prompt.input("이메일? "));
     member.setName(this.prompt.input("이름? "));
     member.setPassword(this.prompt.input("암호? "));
-    member.setCreatedDate(this.prompt.input("가입일? "));
+    member.setCreatedDate(new Date());
 
     this.objectRepository.add(member);
   }

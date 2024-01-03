@@ -1,13 +1,9 @@
 package bitcamp.myapp.handler.assignment;
 
 import bitcamp.menu.AbstractMenuHandler;
-import bitcamp.menu.Menu;
-import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Assignment;
-import bitcamp.util.AnsiEscape;
-import bitcamp.util.List;
 import bitcamp.util.Prompt;
-import java.util.ArrayList;
+import java.util.List;
 
 public class AssignmentViewHandler extends AbstractMenuHandler {
 

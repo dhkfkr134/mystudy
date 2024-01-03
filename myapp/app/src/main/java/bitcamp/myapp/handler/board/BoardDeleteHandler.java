@@ -1,13 +1,9 @@
 package bitcamp.myapp.handler.board;
 
 import bitcamp.menu.AbstractMenuHandler;
-import bitcamp.menu.Menu;
-import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Board;
-import bitcamp.util.AnsiEscape;
-import bitcamp.util.List;
 import bitcamp.util.Prompt;
-import java.util.ArrayList;
+import java.util.List;
 
 public class BoardDeleteHandler extends AbstractMenuHandler {
 

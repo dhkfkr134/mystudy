@@ -1,13 +1,9 @@
 package bitcamp.myapp.handler.member;
 
 import bitcamp.menu.AbstractMenuHandler;
-import bitcamp.menu.Menu;
-import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.AnsiEscape;
-import bitcamp.util.List;
 import bitcamp.util.Prompt;
-import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDeleteHandler extends AbstractMenuHandler {
 

@@ -1,13 +1,9 @@
 package bitcamp.myapp.handler.member;
 
 import bitcamp.menu.AbstractMenuHandler;
-import bitcamp.menu.Menu;
-import bitcamp.menu.MenuHandler;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.AnsiEscape;
-import bitcamp.util.List;
 import bitcamp.util.Prompt;
-import java.util.ArrayList;
+import java.util.List;
 
 public class MemberViewHandler extends AbstractMenuHandler {
 
@@ -25,6 +21,6 @@ public class MemberViewHandler extends AbstractMenuHandler {
     Member member = this.objectRepository.get(index);
     System.out.printf("이메일: %s\n", member.getEmail());
     System.out.printf("이름: %s\n", member.getName());
-    System.out.printf("가입일: %s\n", member.getCreatedDate());
+    System.out.printf("가입일: %1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS\n", member.getCreatedDate());
   }
 }
