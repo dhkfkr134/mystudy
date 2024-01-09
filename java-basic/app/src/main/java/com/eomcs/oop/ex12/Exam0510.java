@@ -26,7 +26,7 @@ public class Exam0510 {
       }
     };
 
-    // 2) 람바 문법 활용
+    // 2) 람다 문법 활용
     Calculator obj2 = (x, y) -> x * y;
 
     // 3) 기존에 작성한 클래스의 스태틱 메서드를 재활용하기
@@ -36,6 +36,7 @@ public class Exam0510 {
     // => 규격? 메서드의 파라미터 타입/개수/순서, 리턴 타입
     // => 문법:
     //    클래스명::메서드명
+    // Calculator c1 = (a,b) -> MyCalculator.plus(a, b);로 변환된다.
     Calculator c1 = MyCalculator::plus; // MyCalculator의 스태틱 메서드인 plus()를 가지고 구현체를 자동 생성!
     //    Calculator c = new Calculator() {
     //      @Override

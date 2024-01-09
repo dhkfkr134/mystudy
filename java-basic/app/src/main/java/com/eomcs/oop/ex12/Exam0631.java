@@ -3,7 +3,7 @@ package com.eomcs.oop.ex12;
 
 import java.util.function.Predicate;
 
-public class Exam0630 {
+public class Exam0631 {
   
   static class My {
     public static boolean test1(String value) {
