@@ -3,11 +3,12 @@ package com.eomcs.oop.ex13;
 
 import java.io.FileReader;
 import java.util.Properties;
+import java.util.function.BiConsumer;
 
 public class Exam01 {
-  static String filename = "message";
-  static String userCountry = "US";
-  static String userLanguage = "en";
+  static String filename = "label";
+  static String userCountry = "KR";
+  static String userLanguage = "ko";
   static Properties label;
 
   static void init() throws Exception {
@@ -17,9 +18,15 @@ public class Exam01 {
     if (System.getProperty("user.language") != null)
       userLanguage = System.getProperty("user.language");
 
+    System.out.printf("지역: %s\n", userCountry);
+    System.out.printf("언어: %s\n", userLanguage);
+    
+//    Properties props = System.getProperties();
+//    props.forEach((k, v) -> System.out.printf("%s = %s\n", k, v));
+    
     label = new Properties();
     label.load(new FileReader(
-        String.format("%s-%s%s.properties", 
+        String.format("%s-%s_%s.properties", 
             filename, userLanguage, userCountry)));
 
   }
@@ -33,6 +40,7 @@ public class Exam01 {
     // "국제화(i18n;Internationalization)"라 한다.
     // 
     System.out.println(label.get("welcome"));
+    System.out.println(label.get("bye"));
 
     // 지역화(l10n;Localization)
     // => 국제화를 지원하는 프로그램의 경우 메뉴명, 라벨명, 버튼명 등 
