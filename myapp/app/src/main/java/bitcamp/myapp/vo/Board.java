@@ -6,19 +6,29 @@ import java.util.Date;
 public class Board implements Serializable{
 
   public static final long serialVersionUID = 100L;
+  private int no;
   private String title;
   private String content;
   private String writer;
   private Date createdDate;
 
-  public static Board createFromCsv(String csv){
-    String[] values = csv.split(",");
-    Board obj = new Board();
-    obj.setTitle(values[0]);
-    obj.setContent(values[1]);
-    obj.setWriter(values[2]);
-    obj.setCreatedDate(new Date(Long.valueOf(values[3])));
-    return obj;
+  @Override
+  public String toString() {
+    return "Board{" +
+        "no=" + no +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", writer='" + writer + '\'' +
+        ", createdDate=" + createdDate +
+        '}';
+  }
+
+  public int getNo() {
+    return no;
+  }
+
+  public void setNo(int no) {
+    this.no = no;
   }
 
   public String getTitle() {

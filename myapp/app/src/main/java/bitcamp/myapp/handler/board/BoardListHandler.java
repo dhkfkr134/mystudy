@@ -1,39 +1,31 @@
 package bitcamp.myapp.handler.board;
 
 import bitcamp.menu.AbstractMenuHandler;
+import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
 import java.util.Iterator;
 import java.util.List;
 
-// 게시글의 '목록' 메뉴를 선택했을 때 작업을 수행하는 클래스
-// - 반드시 MenuHandler 규칙에 따라 클래스를 작성해야 한다.
-//
 public class BoardListHandler extends AbstractMenuHandler {
 
-  private List<Board> objectRepository;
+  private BoardDao boardDao;
 
-  public BoardListHandler(List<Board> objectRepository, Prompt prompt) {
+  public BoardListHandler(BoardDao boardDao, Prompt prompt) {
     super(prompt);
-    this.objectRepository = objectRepository;
+    this.boardDao = boardDao;
   }
 
   @Override
   public void action() {
 
-    System.out.printf("%-20s\t%10s\t%s\n", "Title", "Writer", "Date");
+    System.out.printf("%-4s\t%-20s\t%10s\t%s\n", "No", "Title", "Writer", "Date");
 
-    // Repository 에 보관된 목록을 배열로 리턴 받기
-    // 방법1)
-//    Board[] boards = new Board[this.objectRepository.size()];
-//    this.objectRepository.toArray(boards);
+    List<Board> list = boardDao.findAll();
 
-    // 방법2)
-    Iterator<Board> iterator = this.objectRepository.iterator();
-
-    while (iterator.hasNext()){
-      Board board = iterator.next();
-      System.out.printf("%-20s\t%10s\t%3$tY-%3$tm-%3$td\n",
+    for (Board board : list){
+      System.out.printf("%-4d\t%-20s\t%10s\t%4$tY-%4$tm-%4$td\n",
+          board.getNo(),
           board.getTitle(),
           board.getWriter(),
           board.getCreatedDate());
