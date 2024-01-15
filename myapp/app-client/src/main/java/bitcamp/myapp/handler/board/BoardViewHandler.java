@@ -4,7 +4,6 @@ import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
-import java.util.List;
 
 public class BoardViewHandler extends AbstractMenuHandler {
 
@@ -16,18 +15,19 @@ public class BoardViewHandler extends AbstractMenuHandler {
   }
 
   @Override
-  public void action() {
-
+  protected void action() {
     int no = this.prompt.inputInt("번호? ");
-    Board board = this.boardDao.findBy(no);
+
+    Board board = boardDao.findBy(no);
     if (board == null) {
       System.out.println("게시글 번호가 유효하지 않습니다.");
       return;
     }
-    System.out.printf("번호: %d\n",board.getNo());
+
+    System.out.printf("번호: %d\n", board.getNo());
     System.out.printf("제목: %s\n", board.getTitle());
     System.out.printf("내용: %s\n", board.getContent());
     System.out.printf("작성자: %s\n", board.getWriter());
-    System.out.printf("작성일: %1$tY-%1$tm-%1$td-%1$tH:%1$tM:%1$ts\n", board.getCreatedDate());
+    System.out.printf("작성일: %1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS\n", board.getCreatedDate());
   }
 }

@@ -3,14 +3,24 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Assignment implements Serializable{
+public class Assignment implements Serializable {
 
-  public static final long serialVersionUID = 200L;
+  private static final long serialVersionUID = 100L;
 
   private int no;
   private String title;
   private String content;
   private Date deadline;
+
+  @Override
+  public String toString() {
+    return "Assignment{" +
+        "no=" + no +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", deadline=" + deadline +
+        '}';
+  }
 
   public int getNo() {
     return no;

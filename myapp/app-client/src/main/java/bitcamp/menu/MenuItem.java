@@ -10,7 +10,7 @@ import java.util.Stack;
 //
 public class MenuItem extends AbstractMenu {
 
-  MenuHandler menuHandler;
+  private MenuHandler menuHandler;
 
   public MenuItem(String title, Stack<String> breadcrumb) {
     super(title, breadcrumb);
@@ -25,7 +25,7 @@ public class MenuItem extends AbstractMenu {
     if (this.menuHandler != null) {
       try {
         this.menuHandler.action(this);
-      } catch (Exception e){
+      } catch (Exception e) {
         System.out.println("실행 오류!");
       }
     }

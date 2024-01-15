@@ -1,7 +1,6 @@
 package bitcamp.myapp.dao.network;
 
 import bitcamp.myapp.dao.AssignmentDao;
-import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.DaoException;
 import bitcamp.myapp.vo.Assignment;
 import com.google.gson.Gson;
@@ -12,14 +11,14 @@ import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignmentImpl implements AssignmentDao {
+public class AssignmentDaoImpl implements AssignmentDao {
 
   String dataName;
   DataInputStream in;
   DataOutputStream out;
   Gson gson;
 
-  public AssignmentImpl(String dataName, DataInputStream in, DataOutputStream out) {
+  public AssignmentDaoImpl(String dataName, DataInputStream in, DataOutputStream out) {
     this.dataName = dataName;
     this.in = in;
     this.out = out;

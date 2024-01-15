@@ -4,7 +4,6 @@ import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
-import java.util.Iterator;
 import java.util.List;
 
 public class BoardListHandler extends AbstractMenuHandler {
@@ -17,13 +16,12 @@ public class BoardListHandler extends AbstractMenuHandler {
   }
 
   @Override
-  public void action() {
-
+  protected void action() {
     System.out.printf("%-4s\t%-20s\t%10s\t%s\n", "No", "Title", "Writer", "Date");
 
     List<Board> list = boardDao.findAll();
 
-    for (Board board : list){
+    for (Board board : list) {
       System.out.printf("%-4d\t%-20s\t%10s\t%4$tY-%4$tm-%4$td\n",
           board.getNo(),
           board.getTitle(),

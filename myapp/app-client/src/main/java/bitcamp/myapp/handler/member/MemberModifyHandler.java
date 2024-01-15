@@ -4,7 +4,6 @@ import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Prompt;
-import java.util.List;
 
 public class MemberModifyHandler extends AbstractMenuHandler {
 
@@ -16,12 +15,12 @@ public class MemberModifyHandler extends AbstractMenuHandler {
   }
 
   @Override
-  public void action() {
+  protected void action() {
+    int no = this.prompt.inputInt("번호? ");
 
-    int index = this.prompt.inputInt("번호? ");
-    Member old = this.memberDao.findBy(index);
-    if (old == null){
-      System.out.println("회원 번호가 유효하지 않습니다.");
+    Member old = memberDao.findBy(no);
+    if (old == null) {
+      System.out.println("회원 번호가 유효하지 않습니다!");
       return;
     }
 
@@ -32,7 +31,7 @@ public class MemberModifyHandler extends AbstractMenuHandler {
     member.setPassword(this.prompt.input("새 암호? "));
     member.setCreatedDate(old.getCreatedDate());
 
-    this.memberDao.update(member);
-    System.out.println("회원정보를 변경했습니다.");
+    memberDao.update(member);
+    System.out.println("회원을 변경했습니다.");
   }
 }

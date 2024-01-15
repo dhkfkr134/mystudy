@@ -5,7 +5,6 @@ import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Prompt;
 import java.util.Date;
-import java.util.List;
 
 public class MemberAddHandler extends AbstractMenuHandler {
 
@@ -24,6 +23,6 @@ public class MemberAddHandler extends AbstractMenuHandler {
     member.setPassword(this.prompt.input("암호? "));
     member.setCreatedDate(new Date());
 
-    this.memberDao.add(member);
+    memberDao.add(member);
   }
 }

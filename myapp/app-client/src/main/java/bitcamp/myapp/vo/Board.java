@@ -3,15 +3,16 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Board implements Serializable{
+public class Board implements Serializable {
 
-  public static final long serialVersionUID = 100L;
+  private static final long serialVersionUID = 100L;
+
   private int no;
   private String title;
   private String content;
   private String writer;
   private Date createdDate;
-
+  
   @Override
   public String toString() {
     return "Board{" +

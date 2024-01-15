@@ -4,11 +4,9 @@ import bitcamp.menu.MenuGroup;
 import bitcamp.myapp.dao.AssignmentDao;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
-import bitcamp.myapp.dao.json.AssignmentDaoImpl;
-import bitcamp.myapp.dao.json.MemberDaoImpl;
-import bitcamp.myapp.dao.network.AssignmentImpl;
+import bitcamp.myapp.dao.network.AssignmentDaoImpl;
 import bitcamp.myapp.dao.network.BoardDaoImpl;
-import bitcamp.myapp.dao.network.MemberImpl;
+import bitcamp.myapp.dao.network.MemberDaoImpl;
 import bitcamp.myapp.handler.HelpHandler;
 import bitcamp.myapp.handler.assignment.AssignmentAddHandler;
 import bitcamp.myapp.handler.assignment.AssignmentDeleteHandler;
@@ -25,31 +23,28 @@ import bitcamp.myapp.handler.member.MemberDeleteHandler;
 import bitcamp.myapp.handler.member.MemberListHandler;
 import bitcamp.myapp.handler.member.MemberModifyHandler;
 import bitcamp.myapp.handler.member.MemberViewHandler;
-import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ClientApp {
 
   Prompt prompt = new Prompt(System.in);
 
-  MemberDao memberDao;
-  AssignmentDao assignmentDao;
   BoardDao boardDao;
   BoardDao greetingDao;
+  AssignmentDao assignmentDao;
+  MemberDao memberDao;
 
   MenuGroup mainMenu;
 
+  Socket socket;
+  DataInputStream in;
+  DataOutputStream out;
+
   ClientApp() {
-
-
-    prepareNetWork();
-
+    prepareNetwork();
     prepareMenu();
   }
 
@@ -58,28 +53,18 @@ public class ClientApp {
     new ClientApp().run();
   }
 
-  void prepareNetWork() {
+  void prepareNetwork() {
     try {
-      // 1) 서버와 연결한 후 연결 정보 준비
-      // => new Soket(서버주소, 포트번호)
-      //    - 서버 주소: IP 주소 또는 도메인명
-      //    - 포트 번호: 서버 포트 번호
-      // => 로컬 컴퓨터를 가리키는 주소
-      //    - IP 주소: 127.0.0.1(localhost)
-      //    - 도메인명: localhost
-      System.out.println("서버 연결 중...");
-      Socket socket = new Socket("127.0.0.1", 8888);
+      socket = new Socket("localhost", 8888);
       System.out.println("서버와 연결되었음!");
 
-      DataInputStream in = new DataInputStream(socket.getInputStream());
-      DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-      System.out.println("입출력 준비 완료!");
+      in = new DataInputStream(socket.getInputStream());
+      out = new DataOutputStream(socket.getOutputStream());
 
-      /// 네트워크 DAO 구현체 준비
       boardDao = new BoardDaoImpl("board", in, out);
       greetingDao = new BoardDaoImpl("greeting", in, out);
-      assignmentDao = new AssignmentImpl("assignment",in, out);
-      memberDao = new MemberImpl("member", in, out);
+      assignmentDao = new AssignmentDaoImpl("assignment", in, out);
+      memberDao = new MemberDaoImpl("member", in, out);
 
     } catch (Exception e) {
       System.out.println("통신 오류!");
@@ -120,15 +105,31 @@ public class ClientApp {
 
     mainMenu.addItem("도움말", new HelpHandler(prompt));
   }
+
   void run() {
     while (true) {
       try {
         mainMenu.execute(prompt);
         prompt.close();
+        close();
         break;
       } catch (Exception e) {
         System.out.println("예외 발생!");
       }
+    }
+  }
+
+  void close() {
+    try (Socket socket = this.socket;
+        DataInputStream in = this.in;
+        DataOutputStream out = this.out;) {
+
+      out.writeUTF("quit");
+      System.out.println(in.readUTF());
+
+    } catch (Exception e) {
+      // 서버와 연결을 끊는 과정에서 예외가 발생한 경우 무시한다.
+      // 왜? 따로 처리할 것이 없다.
     }
   }
 }

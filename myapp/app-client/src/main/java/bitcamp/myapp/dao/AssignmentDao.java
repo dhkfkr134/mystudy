@@ -1,6 +1,5 @@
 package bitcamp.myapp.dao;
 
-import bitcamp.myapp.dao.json.AssignmentDaoImpl;
 import bitcamp.myapp.vo.Assignment;
 import java.util.List;
 
@@ -15,6 +14,5 @@ public interface AssignmentDao {
   Assignment findBy(int no);
 
   int update(Assignment assignment);
+
 }
-
-

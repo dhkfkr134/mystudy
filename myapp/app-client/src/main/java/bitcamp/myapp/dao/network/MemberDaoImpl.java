@@ -1,6 +1,5 @@
 package bitcamp.myapp.dao.network;
 
-import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.DaoException;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
@@ -12,14 +11,14 @@ import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberImpl implements MemberDao {
+public class MemberDaoImpl implements MemberDao {
 
   String dataName;
   DataInputStream in;
   DataOutputStream out;
   Gson gson;
 
-  public MemberImpl(String dataName, DataInputStream in, DataOutputStream out) {
+  public MemberDaoImpl(String dataName, DataInputStream in, DataOutputStream out) {
     this.dataName = dataName;
     this.in = in;
     this.out = out;
