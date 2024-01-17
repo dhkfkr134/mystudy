@@ -49,7 +49,7 @@ public class ClientApp {
 
   void prepareNetwork() {
     try {
-      System.out.println("서버와 연결되:wq었음!");
+      System.out.println("서버와 연결되었음!");
       DaoProxyGenerator daoGenerator = new DaoProxyGenerator("192.168.0.12",8888);
 
       boardDao = daoGenerator.create(BoardDao.class,"board");
