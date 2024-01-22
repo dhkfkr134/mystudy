@@ -22,9 +22,6 @@ import bitcamp.myapp.handler.member.MemberListHandler;
 import bitcamp.myapp.handler.member.MemberModifyHandler;
 import bitcamp.myapp.handler.member.MemberViewHandler;
 import bitcamp.util.Prompt;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
 
 public class ClientApp {
 
@@ -49,13 +46,12 @@ public class ClientApp {
 
   void prepareNetwork() {
     try {
-      System.out.println("서버와 연결되었음!");
-      DaoProxyGenerator daoGenerator = new DaoProxyGenerator("192.168.0.12",8888);
+      DaoProxyGenerator daoGenerator = new DaoProxyGenerator("localhost", 8888);
 
-      boardDao = daoGenerator.create(BoardDao.class,"board");
-      greetingDao = daoGenerator.create(BoardDao.class,"greeting");
-      assignmentDao = daoGenerator.create(AssignmentDao.class,"assignment");
-      memberDao = daoGenerator.create(MemberDao.class,"member");
+      boardDao = daoGenerator.create(BoardDao.class, "board");
+      greetingDao = daoGenerator.create(BoardDao.class, "greeting");
+      assignmentDao = daoGenerator.create(AssignmentDao.class, "assignment");
+      memberDao = daoGenerator.create(MemberDao.class, "member");
 
     } catch (Exception e) {
       System.out.println("통신 오류!");
@@ -108,4 +104,5 @@ public class ClientApp {
       }
     }
   }
+
 }

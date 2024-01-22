@@ -2,7 +2,6 @@
 package com.eomcs.io.ex03;
 
 import java.io.FileReader;
-import java.nio.charset.Charset;
 
 public class Exam0130 {
 
@@ -10,10 +9,11 @@ public class Exam0130 {
     FileReader in = new FileReader("sample/utf8.txt"); // 41 42 ea b0 80 ea b0 81
 
     int ch;
-    
+
     while ((ch = in.read()) != -1) {
-    System.out.printf("%04x ", ch);
+      System.out.printf("%04x ", ch);
     }
+
     in.close();
   }
 }

@@ -14,7 +14,6 @@ public class Server0150 {
       System.out.println("클라이언트의 연결을 기다리고 있음.");
 
       try (Socket socket = serverSocket.accept();
-          //Scanner는 데코레이터가 아니지만 처럼 사용하는 것이고, PrintStream은 데코레이터이다.
           Scanner in = new Scanner(socket.getInputStream());
           PrintStream out = new PrintStream(socket.getOutputStream())) {
 

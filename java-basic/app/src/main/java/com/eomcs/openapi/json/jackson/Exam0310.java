@@ -2,7 +2,6 @@
 package com.eomcs.openapi.json.jackson;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Exam0310 {
@@ -14,7 +13,7 @@ public class Exam0310 {
     project.setContent("자바 웹 애플리케이션");
     project.setStartDate(Date.valueOf("2024-4-1"));
     project.setEndDate(Date.valueOf("2024-5-8"));
-    
+
     ObjectMapper mapper = new ObjectMapper();
     String jsonStr = mapper.writeValueAsString(project);
 

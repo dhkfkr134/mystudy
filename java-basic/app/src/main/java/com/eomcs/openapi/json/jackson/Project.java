@@ -11,12 +11,14 @@ public class Project {
   private int no;
   private String title;
   private String content;
-  
+
   // ObjectMapper 객체가 이 필드의 값을 읽고 쓸 때 사용할 날짜 패턴을 지정한다.
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
   private Date startDate;
+
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
   private Date endDate;
+
   private Member owner;
   private List<Member> members = new ArrayList<>();
   private List<Task> tasks = new ArrayList<>();

@@ -4,25 +4,6 @@ package com.eomcs.oop.ex12;
 import java.util.function.Predicate;
 
 public class Exam0630 {
-  
-  static class My {
-    public static boolean test1(String value) {
-      return true;
-    }
-    
-    public boolean test2(String value) {
-      return true;
-    }
-    
-    public boolean test3() {
-      return true;
-    }
-    
-    public boolean test4() {
-      return true;
-    }
-  }
-  
 
   public static void main(String[] args) {
 

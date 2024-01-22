@@ -3,6 +3,7 @@ package com.eomcs.oop.ex11.b;
 
 class A {
   static class X {
+
   }
 }
 

@@ -8,7 +8,7 @@ import java.util.Base64.Encoder;
 public class Exam0110 {
 
   public static void main(String[] args) throws Exception {
-    String str = "AB";
+    String str = "ABC012가각";
 
     byte[] bytes = str.getBytes("UTF-8");
     for (byte b : bytes) {

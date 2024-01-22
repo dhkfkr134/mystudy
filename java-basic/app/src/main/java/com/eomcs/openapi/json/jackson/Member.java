@@ -12,10 +12,12 @@ public class Member {
   private Date registeredDate;
   private School school;
 
+
   @Override
   public String toString() {
-    return "Member [no=" + no + ", fullname=" + fullname + ", email=" + email + ", password=" + password
-        + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate + ", school=" + school + "]";
+    return "Member [no=" + no + ", fullname=" + fullname + ", email=" + email + ", password="
+        + password + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate
+        + ", school=" + school + "]";
   }
 
   public int getNo() {
@@ -27,8 +29,8 @@ public class Member {
   public String getName() {
     return fullname;
   }
-  public void setName(String name) {
-    this.fullname = name;
+  public void setName(String fullname) {
+    this.fullname = fullname;
   }
   public String getEmail() {
     return email;
@@ -63,9 +65,7 @@ public class Member {
   public School getSchool() {
     return school;
   }
-
   public void setSchool(School school) {
     this.school = school;
   }
-  
 }

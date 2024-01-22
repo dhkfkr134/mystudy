@@ -7,30 +7,30 @@ package com.eomcs.oop.ex06.e;
 // - 예)
 //     java.lang.String
 //
-final class A1 {
+final class 단팥빵 {
 }
 
-//서브 클래스를 정의하지 못한다.
-// class A2 extends A1 {
-//  
+// 서브 클래스를 정의하지 못한다.
+//class 크림단팥빵 extends 단팥빵 {
+//
 //}
 
-//String 클래스는 final클래스이다. 서브 클래스 정의 불가능
-//class MyString extends String{
+// String 클래스는 final 클래스이다. 서브 클래스 정의 불가!
+//class MyString extends String {
 //  
 //}
 
 // final 클래스를 상속 받을 수 없다.
-public class Exam0110 // extends A
+public class Exam0110
 {
   public static void main(String[] args) {
-    m(new A1());
-    
-    //상속 받지 못해서 m()의 인자로 못 넘긴다.
-//    m(new A2());
-    
+    먹는다(new 단팥빵());
+
+    // 단팥빵 객체 대신 단팥빵의 서브 클래스의 객체를 전달 할 수 없다.
+    //먹는다(new 크림단팥빵()); 
   }
-  static void m(A1 obj) {
-    
+
+  static void 먹는다(단팥빵 obj) {
+
   }
 }

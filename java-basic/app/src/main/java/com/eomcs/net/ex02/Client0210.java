@@ -11,8 +11,6 @@ public class Client0210 {
     System.out.println("클라이언트 실행!");
 
     Socket socket = new Socket("192.168.0.15", 8888);
-    // 대기열이 꽉찼으면 서버에 연결되지 않는다.
-    // 타임아웃(대충2~30초)동안 연결되지 않으면 예외던지고 연결요청을 취소한다.
     System.out.println("서버에 연결됨!");
     // 서버의 대기열에 접속 순서대로 대기한다.
     // 서버에서 연결이 승인되면, 비로서 입출력을 할 수 있다.
@@ -21,7 +19,6 @@ public class Client0210 {
     keyScan.nextLine();
     // 대기열의 크기에 따라 연결되는 클라이언트 수의 제한을 확인하기 위해
     // 여러 개의 클라이언트를 실행하라!
-
 
     // 자원해제
     socket.close();
