@@ -23,10 +23,12 @@ public class Exam0120 {
             // 사용자가 카운트 값을 입력할 시간을 주기 위해
             // 10초 정도 스레드를 멈춘다.
             Thread.sleep(10000);
-
+            if( count > 0) {
             System.out.println("카운트 시작!");
             for (int i = count; i > 0; i--) {
               System.out.println("==> " + i);
+              count--;
+            }
             }
           }
         } catch (Exception e) {
