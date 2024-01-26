@@ -21,7 +21,7 @@ public class Exam0420 {
             this.millisec, Thread.currentThread().getName());
 
         //        Thread.sleep(millisec);
-        for (long i = 0; i < 1_0000_0000; i++) {
+        for (long i = 0; i < 6000*millisec; i++) {
           double r = Math.tan(3456.77889) / Math.random();
         }
 

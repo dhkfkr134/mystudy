@@ -16,8 +16,8 @@ public class Exam0210 {
     @Override
     public void run() {
       try {
-        System.out.printf("[%s] - 스레드에서 작업 실행 중...\n",
-            Thread.currentThread().getName());
+        System.out.printf("[%s] - 스레드에서 작업 실행 중...(%d)\n",
+            Thread.currentThread().getName(), millisec);
 
         Thread.sleep(millisec);
 
@@ -36,7 +36,7 @@ public class Exam0210 {
     // - 스레드풀은 큐에서 작업을 꺼내 스레드에게 일을 시킨다.
     //
     executorService.execute(new MyRunnable(6000));
-    executorService.execute(new MyRunnable(3000));
+    executorService.execute(new MyRunnable(7000));
     executorService.execute(new MyRunnable(9000));
 
     // 스레드풀의 크기를 초과해서 작업 수행을 요청한다면?
