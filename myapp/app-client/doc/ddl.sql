@@ -8,16 +8,16 @@ create table boards(
   created_date datetime null default now()
 );
 
-insert into boards(title,content,writer)
- values('제목1', '내용1','홍길동');
-insert into boards(title,content,writer)
- values('제목2', '내용2','임꺽정');
-insert into boards(title,content,writer)
- values('제목3', '내용3','유관순');
-insert into boards(title,content,writer)
- values('제목4', '내용4','안중근');
-insert into boards(title,content,writer)
- values('제목5', '내용5','윤봉길');
+insert into boards(title,content,writer,category)
+ values('제목1', '내용1','홍길동',1);
+insert into boards(title,content,writer,category)
+ values('제목2', '내용2','임꺽정',1);
+insert into boards(title,content,writer,category)
+ values('제목3', '내용3','유관순',1);
+insert into boards(title,content,writer,category)
+ values('제목4', '내용4','안중근',1);
+insert into boards(title,content,writer,category)
+ values('제목5', '내용5','윤봉길',1);
 
 select *
 from boards;
@@ -62,13 +62,13 @@ password varchar(100) not null,
 created_date datetime null default now()
 );
 
-insert into members(email,name,password)
+insert into members(email,name,password,category)
  values('dhkfkr134@naver.com','kim',sha2('1111',256));
-insert into members(email,name,password)
+insert into members(email,name,password,category)
  values('dhkfkr13@naver.com','kimju',sha2('111',256));
-insert into members(email,name,password)
+insert into members(email,name,password,category)
  values('dhkfkr4@naver.com','kimjung',sha2('11',256));
-insert into members(email,name,password)
+insert into members(email,name,password,category)
  values('dhkfkr@naver.com','kimjungwon',sha2('1',256));
 insert into members(email,name,password)
  values('dhk@naver.com','won',sha2('1112',256));
