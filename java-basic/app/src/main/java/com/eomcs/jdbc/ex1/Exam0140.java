@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 public class Exam0140 {
 
   public static void main(String[] args) {
+    
 
     // JDBC 드라이버 등록 방법4: Driver 구현체 자동 로딩
     // => DriverManager를 사용할 때,

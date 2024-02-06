@@ -3,10 +3,12 @@ package com.eomcs.jdbc.ex1;
 
 import java.sql.DriverManager;
 
-public class Exam0210 {
+public class Exam0211 {
 
   public static void main(String[] args) throws Exception {
 
+    int count = 0;
+    while (true) {
     java.sql.Connection con = null;
 
     try {
@@ -53,7 +55,8 @@ public class Exam0210 {
       // MariaDB의 Driver 구현체가 리턴한 Connection 객체는
       // 어떤 클래스일까?
       System.out.println(con.getClass().getName());
-
+      
+      System.out.print(++count);
     } finally {
       // 자원해제
       // => 파일과 마찬가지로 DBMS에 연결한 후 더이상 사용하지 않으면 연결을 해제해야 한다.
@@ -66,6 +69,7 @@ public class Exam0210 {
       }
       System.out.println("DBMS와 연결 해제됨!");
     }
+  }
   }
 }
 

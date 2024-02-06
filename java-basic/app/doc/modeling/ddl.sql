@@ -42,7 +42,7 @@ CREATE TABLE lms_application (
   application_no INTEGER  NOT NULL COMMENT '수강신청번호', -- 수강신청번호
   lecture_no     INTEGER  NOT NULL COMMENT '과정번호', -- 과정번호
   student_no     INTEGER  NOT NULL COMMENT '학생번호', -- 학생번호
-  register_dt    DATETIME NOT NULL COMMENT '신청일', -- 신청일
+  register_dt    DATETIME NOT NULL DEFAULT (now()) COMMENT '신청일', -- 신청일
   state          CHAR(1)  NULL     COMMENT '상태' -- 상태
 )
 COMMENT '수강신청';
@@ -98,7 +98,7 @@ ALTER TABLE lms_managers
   PRIMARY KEY (
   manager_no -- 매니저번호
   );
-  
+
 -- 강의실
 CREATE TABLE lms_rooms (
   room_no   INTEGER     NOT NULL COMMENT '강의실번호', -- 강의실번호
@@ -133,7 +133,12 @@ ALTER TABLE lms_teachers
   PRIMARY KEY (
   teacher_no -- 강사번호
   );
-  
+
+-- 강사 유니크 인덱스
+CREATE UNIQUE INDEX UIX_lms_teachers
+  ON lms_teachers ( -- 강사
+  );
+
 -- 강의실사진
 CREATE TABLE lms_photos (
   photo_no INTEGER      NOT NULL COMMENT '강의실사진번호', -- 강의실사진번호
@@ -219,12 +224,12 @@ ALTER TABLE lms_students
   student_no -- 학생번호
   );
 
--- 학생 유니크 인덱스
+-- 학생 유니크 인덱스2
 CREATE UNIQUE INDEX UIX_lms_students2
   ON lms_students ( -- 학생
     jumin ASC -- 주민번호
   );
-  
+
 -- 학력
 CREATE TABLE lms_level (
   level_no INTEGER     NOT NULL COMMENT '학력번호', -- 학력번호
@@ -288,11 +293,11 @@ ALTER TABLE lms_departments
 
 -- 회원
 CREATE TABLE lms_members (
-  member_no INTEGER     NOT NULL COMMENT '회원번호', -- 회원번호
-  name      VARCHAR(60) NOT NULL COMMENT '이름', -- 이름
-  email     VARCHAR(40) NOT NULL COMMENT '이메일', -- 이메일
-  tel       VARCHAR(30) NOT NULL COMMENT '전화' -- 전화
-  register_dt DATE NULL DEFAULT (now()) COMMENT '가입일' -- 가입일
+  member_no   INTEGER     NOT NULL COMMENT '회원번호', -- 회원번호
+  name        VARCHAR(60) NOT NULL COMMENT '이름', -- 이름
+  email       VARCHAR(40) NOT NULL COMMENT '이메일', -- 이메일
+  tel         VARCHAR(30) NOT NULL COMMENT '전화', -- 전화
+  register_dt DATE        NULL     DEFAULT (curdate()) COMMENT '가입일' -- 가입일
 )
 COMMENT '회원';
 
