@@ -62,13 +62,13 @@ password varchar(100) not null,
 created_date datetime null default now()
 );
 
-insert into members(email,name,password,category)
+insert into members(email,name,password)
  values('dhkfkr134@naver.com','kim',sha2('1111',256));
-insert into members(email,name,password,category)
+insert into members(email,name,password)
  values('dhkfkr13@naver.com','kimju',sha2('111',256));
-insert into members(email,name,password,category)
+insert into members(email,name,password)
  values('dhkfkr4@naver.com','kimjung',sha2('11',256));
-insert into members(email,name,password,category)
+insert into members(email,name,password)
  values('dhkfkr@naver.com','kimjungwon',sha2('1',256));
 insert into members(email,name,password)
  values('dhk@naver.com','won',sha2('1112',256));

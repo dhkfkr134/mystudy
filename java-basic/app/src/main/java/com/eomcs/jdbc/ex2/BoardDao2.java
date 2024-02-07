@@ -12,8 +12,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardDao {
-  public int delete(int no) throws Exception {
+public class BoardDao2 {
+
+  Connection con;
+  
+  public BoardDao2(String jdbcUrl, String username, String password) throws Exception{
+    con = DriverManager.getConnection(jdbcUrl,username,password);
+  }
+  
+  public static int delete(int no) throws Exception {
+    
+    
     try (Connection con = DriverManager.getConnection(
         "jdbc:mariadb://localhost:3306/studydb", "study", "Bitcamp!@#123");
         Statement stmt = con.createStatement()) {
@@ -26,7 +35,7 @@ public class BoardDao {
     }
   }
 
-  public List<Board> findAll() throws Exception {
+  public static List<Board> findAll() throws Exception {
     try (Connection con = DriverManager.getConnection(
         "jdbc:mariadb://localhost:3306/studydb", "study", "Bitcamp!@#123");
         Statement stmt = con.createStatement();
@@ -46,7 +55,7 @@ public class BoardDao {
     }
   }
 
-  public int insert(Board board) throws Exception {
+  public static int insert(Board board) throws Exception {
     try (Connection con = DriverManager.getConnection(
         "jdbc:mariadb://localhost:3306/studydb", "study", "Bitcamp!@#123");
         Statement stmt = con.createStatement();) {
@@ -60,7 +69,7 @@ public class BoardDao {
     }
   }
 
-  public int update(Board board) throws Exception {
+  public static int update(Board board) throws Exception {
     try (Connection con = DriverManager.getConnection(
         "jdbc:mariadb://localhost:3306/studydb", "study", "Bitcamp!@#123");
         Statement stmt = con.createStatement()) {
@@ -75,7 +84,7 @@ public class BoardDao {
     }
   }
 
-  public Board findBy(String no) throws Exception {
+  public static Board findBy(String no) throws Exception {
     try (Connection con = DriverManager.getConnection(
         "jdbc:mariadb://localhost:3306/studydb", "study", "Bitcamp!@#123");
         Statement stmt = con.createStatement();
