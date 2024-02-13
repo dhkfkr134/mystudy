@@ -26,7 +26,6 @@ public class BoardDaoImpl implements BoardDao {
     Connection con = null;
     try {
       con =threadConnection.get();
-      con.setAutoCommit(false);
 
       try (PreparedStatement pstmt = con.prepareStatement(
         "insert into boards(title,content,writer,category) values(?, ?, ?, ?)")) {
@@ -36,16 +35,8 @@ public class BoardDaoImpl implements BoardDao {
         pstmt.setInt(4, this.category);
 
         pstmt.executeUpdate();
-        pstmt.executeUpdate();
-
-        Thread.sleep(10000);
-        pstmt.executeUpdate();
       }
-      con.commit();
     } catch (Exception e) {
-      try{
-        con.rollback();
-      } catch (Exception e2) {}
       throw new DaoException("데이터 입력 오류", e);
     }
   }
