@@ -25,13 +25,11 @@ import bitcamp.myapp.handler.member.MemberListHandler;
 import bitcamp.myapp.handler.member.MemberModifyHandler;
 import bitcamp.myapp.handler.member.MemberViewHandler;
 import bitcamp.util.Prompt;
-import bitcamp.util.ThreadConnection;
+import bitcamp.util.DBConnectionPool;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -43,7 +41,7 @@ public class ServerApp {
   BoardDao greetingDao;
   AssignmentDao assignmentDao;
   MemberDao memberDao;
-  ThreadConnection threadConnection;
+  DBConnectionPool connectionPool;
 
   MenuGroup mainMenu;
 
@@ -60,13 +58,13 @@ public class ServerApp {
   void prepareDatabase() {
     try {
 
-      threadConnection = new ThreadConnection(
+      connectionPool = new DBConnectionPool(
           "jdbc:mysql://localhost/studydb", "study", "Bitcamp!@#123");
 
-      boardDao = new BoardDaoImpl(threadConnection,1);
-      greetingDao = new BoardDaoImpl(threadConnection, 2);
-      assignmentDao = new AssignmentDaoImpl(threadConnection);
-      memberDao = new MemberDaoImpl(threadConnection);
+      boardDao = new BoardDaoImpl(connectionPool,1);
+      greetingDao = new BoardDaoImpl(connectionPool, 2);
+      assignmentDao = new AssignmentDaoImpl(connectionPool);
+      memberDao = new MemberDaoImpl(connectionPool);
 
     } catch (Exception e) {
       System.out.println("통신 오류!");
@@ -78,14 +76,14 @@ public class ServerApp {
     mainMenu = MenuGroup.getInstance("메인");
 
     MenuGroup assignmentMenu = mainMenu.addGroup("과제");
-    assignmentMenu.addItem("등록", new AssignmentAddHandler(threadConnection, assignmentDao));
-    assignmentMenu.addItem("조회", new AssignmentViewHandler(assignmentDao));
-    assignmentMenu.addItem("변경", new AssignmentModifyHandler(assignmentDao));
-    assignmentMenu.addItem("삭제", new AssignmentDeleteHandler(assignmentDao));
-    assignmentMenu.addItem("목록", new AssignmentListHandler(assignmentDao));
+    assignmentMenu.addItem("등록", new AssignmentAddHandler(connectionPool, assignmentDao));
+    assignmentMenu.addItem("조회", new AssignmentViewHandler(connectionPool,assignmentDao));
+    assignmentMenu.addItem("변경", new AssignmentModifyHandler(connectionPool, assignmentDao));
+    assignmentMenu.addItem("삭제", new AssignmentDeleteHandler(connectionPool, assignmentDao));
+    assignmentMenu.addItem("목록", new AssignmentListHandler(connectionPool, assignmentDao));
 
     MenuGroup boardMenu = mainMenu.addGroup("게시글");
-    boardMenu.addItem("등록", new BoardAddHandler(threadConnection ,boardDao));
+    boardMenu.addItem("등록", new BoardAddHandler(connectionPool,boardDao));
     boardMenu.addItem("조회", new BoardViewHandler(boardDao));
     boardMenu.addItem("변경", new BoardModifyHandler(boardDao));
     boardMenu.addItem("삭제", new BoardDeleteHandler(boardDao));
@@ -99,7 +97,7 @@ public class ServerApp {
     memberMenu.addItem("목록", new MemberListHandler(memberDao));
 
     MenuGroup greetingMenu = mainMenu.addGroup("가입인사");
-    greetingMenu.addItem("등록", new BoardAddHandler(threadConnection, greetingDao));
+    greetingMenu.addItem("등록", new BoardAddHandler(connectionPool, greetingDao));
     greetingMenu.addItem("조회", new BoardViewHandler(greetingDao));
     greetingMenu.addItem("변경", new BoardModifyHandler(greetingDao));
     greetingMenu.addItem("삭제", new BoardDeleteHandler(greetingDao));

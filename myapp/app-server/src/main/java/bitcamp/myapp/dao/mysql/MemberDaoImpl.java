@@ -3,12 +3,8 @@ package bitcamp.myapp.dao.mysql;
 import bitcamp.myapp.dao.DaoException;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.ThreadConnection;
-import java.io.PipedReader;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import bitcamp.util.DBConnectionPool;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -16,8 +12,8 @@ import java.util.List;
 
 public class MemberDaoImpl implements MemberDao {
 
-  ThreadConnection threadConnection;
-  public MemberDaoImpl(ThreadConnection threadConnection) {
+  DBConnectionPool threadConnection;
+  public MemberDaoImpl(DBConnectionPool threadConnection) {
   this.threadConnection = threadConnection;
   }
 
@@ -25,7 +21,7 @@ public class MemberDaoImpl implements MemberDao {
   public void add(Member member) {
     Connection con = null;
     try {
-      con =threadConnection.get();
+      con =threadConnection.getConnection();
       try (PreparedStatement pstmt = con.prepareStatement(
         "insert into members(email, name, password) values(?,?,sha2(?,256))")) {
       pstmt.setString(1,member.getEmail());
@@ -40,7 +36,7 @@ public class MemberDaoImpl implements MemberDao {
   public int delete(int no) {
     Connection con = null;
     try {
-      con =threadConnection.get();    try (PreparedStatement pstmt = con.prepareStatement("delete from Members where member_no=?")) {
+      con =threadConnection.getConnection();    try (PreparedStatement pstmt = con.prepareStatement("delete from Members where member_no=?")) {
       pstmt.setInt(1,no);
       return pstmt.executeUpdate();
     }} catch (Exception e){
@@ -52,7 +48,7 @@ public class MemberDaoImpl implements MemberDao {
   public List<Member> findAll() {
       Connection con = null;
     try {
-      con =threadConnection.get();  try (PreparedStatement pstmt = con.prepareStatement("select * from members");
+      con =threadConnection.getConnection();  try (PreparedStatement pstmt = con.prepareStatement("select * from members");
         ResultSet rs = pstmt.executeQuery()) {
 
       ArrayList<Member> list = new ArrayList<>();
@@ -77,7 +73,7 @@ public class MemberDaoImpl implements MemberDao {
   public Member findBy(int no) {
       Connection con = null;
     try {
-      con =threadConnection.get();    try (PreparedStatement pstmt = con.prepareStatement("select * from members where member_no=")) {
+      con =threadConnection.getConnection();    try (PreparedStatement pstmt = con.prepareStatement("select * from members where member_no=")) {
       pstmt.setInt(1,no);
       try(ResultSet rs = pstmt.executeQuery()){
 
@@ -103,7 +99,7 @@ public class MemberDaoImpl implements MemberDao {
   public int update(Member member) {
       Connection con = null;
     try {
-      con =threadConnection.get();
+      con =threadConnection.getConnection();
       try (PreparedStatement pstmt = con.prepareStatement(
         "update members set email=?, name=?, password=? where member_no = ?")){
       pstmt.setString(1,member.getEmail());

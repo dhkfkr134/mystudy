@@ -4,18 +4,17 @@ import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
-import bitcamp.util.ThreadConnection;
+import bitcamp.util.DBConnectionPool;
 import java.sql.Connection;
-import java.util.Date;
 
 public class BoardAddHandler extends AbstractMenuHandler {
 
   private BoardDao boardDao;
-  ThreadConnection threadConnection;
+  DBConnectionPool connectionPool;
 
-  public BoardAddHandler(ThreadConnection threadConnection, BoardDao boardDao) {
+  public BoardAddHandler(DBConnectionPool connectionPool, BoardDao boardDao) {
     this.boardDao = boardDao;
-    this.threadConnection = threadConnection;
+    this.connectionPool = connectionPool;
   }
 
   @Override
@@ -27,7 +26,7 @@ public class BoardAddHandler extends AbstractMenuHandler {
 
     Connection con = null;
     try {
-      con = threadConnection.get();
+      con = connectionPool.getConnection();
       con.setAutoCommit(false);
 
       boardDao.add(board);
@@ -37,6 +36,9 @@ public class BoardAddHandler extends AbstractMenuHandler {
       con.commit();
     } catch (Exception e){
       try {con.rollback();} catch (Exception e2){}
+    } finally {
+      try{con.setAutoCommit(true);} catch (Exception e){}
+      connectionPool.returnConnection(con);
     }
   }
 }
