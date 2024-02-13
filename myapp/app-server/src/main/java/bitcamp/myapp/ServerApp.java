@@ -25,6 +25,7 @@ import bitcamp.myapp.handler.member.MemberListHandler;
 import bitcamp.myapp.handler.member.MemberModifyHandler;
 import bitcamp.myapp.handler.member.MemberViewHandler;
 import bitcamp.util.Prompt;
+import bitcamp.util.ThreadConnection;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
@@ -57,14 +58,14 @@ public class ServerApp {
 
   void prepareDatabase() {
     try {
-      Connection con = DriverManager.getConnection(
-          //"jdbc:mysql://localhost/studydb", "study", "Bitcamp!@#123");
-          "jdbc:mysql://db-ld27h-kr.vpc-pub-cdb.ntruss.com/studydb", "study", "Bitcamp!@#123");
 
-      boardDao = new BoardDaoImpl(con, 1);
-      greetingDao = new BoardDaoImpl(con, 2);
-      assignmentDao = new AssignmentDaoImpl(con);
-      memberDao = new MemberDaoImpl(con);
+      ThreadConnection threadConnection = new ThreadConnection(
+          "jdbc:mysql://localhost/studydb", "study", "Bitcamp!@#123");
+
+      boardDao = new BoardDaoImpl(threadConnection,1);
+      greetingDao = new BoardDaoImpl(threadConnection, 2);
+      assignmentDao = new AssignmentDaoImpl(threadConnection);
+      memberDao = new MemberDaoImpl(threadConnection);
 
     } catch (Exception e) {
       System.out.println("통신 오류!");
@@ -135,11 +136,6 @@ public class ServerApp {
           break;
         } catch (Exception e) {
           System.out.println("예외 발생!");
-          System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-              + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-              + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-              + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-              + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
           e.printStackTrace();
         }
       }
