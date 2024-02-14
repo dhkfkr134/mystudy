@@ -2,15 +2,19 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class Board implements Serializable{
+public class Board implements Serializable {
 
-  public static final long serialVersionUID = 100L;
+  private static final long serialVersionUID = 100L;
+
   private int no;
   private String title;
   private String content;
-  private String writer;
+  private Member writer;
   private Date createdDate;
+  private List<AttachedFile> files;
+  private int fileCount;
 
   @Override
   public String toString() {
@@ -18,9 +22,27 @@ public class Board implements Serializable{
         "no=" + no +
         ", title='" + title + '\'' +
         ", content='" + content + '\'' +
-        ", writer='" + writer + '\'' +
+        ", writer=" + writer +
         ", createdDate=" + createdDate +
+        ", files=" + files +
+        ", fileCount=" + fileCount +
         '}';
+  }
+
+  public Member getWriter() {
+    return writer;
+  }
+
+  public void setWriter(Member writer) {
+    this.writer = writer;
+  }
+
+  public int getFileCount() {
+    return fileCount;
+  }
+
+  public void setFileCount(int fileCount) {
+    this.fileCount = fileCount;
   }
 
   public int getNo() {
@@ -47,19 +69,19 @@ public class Board implements Serializable{
     this.content = content;
   }
 
-  public String getWriter() {
-    return writer;
-  }
-
-  public void setWriter(String writer) {
-    this.writer = writer;
-  }
-
   public Date getCreatedDate() {
     return createdDate;
   }
 
   public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
+  }
+
+  public List<AttachedFile> getFiles() {
+    return files;
+  }
+
+  public void setFiles(List<AttachedFile> files) {
+    this.files = files;
   }
 }

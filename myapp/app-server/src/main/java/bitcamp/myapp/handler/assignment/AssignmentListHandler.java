@@ -3,9 +3,7 @@ package bitcamp.myapp.handler.assignment;
 import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.AssignmentDao;
 import bitcamp.myapp.vo.Assignment;
-import bitcamp.util.DBConnectionPool;
 import bitcamp.util.Prompt;
-import java.sql.Connection;
 import java.util.List;
 
 public class AssignmentListHandler extends AbstractMenuHandler {
@@ -19,18 +17,19 @@ public class AssignmentListHandler extends AbstractMenuHandler {
   @Override
   protected void action(Prompt prompt) {
     try {
-
       prompt.printf("%-4s\t%-20s\t%s\n", "번호", "과제", "제출마감일");
+
       List<Assignment> list = assignmentDao.findAll();
+
       for (Assignment assignment : list) {
         prompt.printf("%-4d\t%-20s\t%s\n",
             assignment.getNo(),
             assignment.getTitle(),
             assignment.getDeadline());
       }
+
     } catch (Exception e) {
-      prompt.println("삭제 오류!");
-      e.printStackTrace();
+      prompt.println("목록 오류!");
     }
   }
 }

@@ -11,7 +11,6 @@ public abstract class AbstractMenuHandler implements MenuHandler {
   public void action(Menu menu, Prompt prompt) {
     this.printMenuTitle(menu.getTitle(), prompt);
     this.menu = menu;
-
     this.action(prompt);
   }
 

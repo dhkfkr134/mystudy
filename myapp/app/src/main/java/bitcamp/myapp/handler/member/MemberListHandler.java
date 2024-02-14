@@ -4,31 +4,32 @@ import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Prompt;
-import java.util.Iterator;
 import java.util.List;
 
 public class MemberListHandler extends AbstractMenuHandler {
 
   private MemberDao memberDao;
 
-  public MemberListHandler(MemberDao memberDao, Prompt prompt) {
-    super(prompt);
+  public MemberListHandler(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
 
   @Override
-  public void action() {
+  protected void action(Prompt prompt) {
+    try {
+      prompt.printf("%-4s\t%-10s\t%30s\t%s\n", "번호", "이름", "이메일", "가입일");
 
-    System.out.printf("%-4s\t%-10s\t%30s\t%s\n","번호", "이름", "이메일", "가입일");
+      List<Member> list = memberDao.findAll();
 
-    List<Member> members = this.memberDao.findAll();
-
-    for(Member member : members) {
-      System.out.printf("%-4d\t%-10s\t%30s\t%4$tY-%4$tm-%4$td\n",
-          member.getNo(),
-          member.getName(),
-          member.getEmail(),
-          member.getCreatedDate());
+      for (Member member : list) {
+        prompt.printf("%-4d\t%-10s\t%30s\t%4$tY-%4$tm-%4$td\n",
+            member.getNo(),
+            member.getName(),
+            member.getEmail(),
+            member.getCreatedDate());
+      }
+    } catch (Exception e) {
+      prompt.println("목록 오류!");
     }
   }
 }

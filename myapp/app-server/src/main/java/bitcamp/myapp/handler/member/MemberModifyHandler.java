@@ -3,20 +3,19 @@ package bitcamp.myapp.handler.member;
 import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.DBConnectionPool;
 import bitcamp.util.Prompt;
-import java.sql.Connection;
 
 public class MemberModifyHandler extends AbstractMenuHandler {
 
   private MemberDao memberDao;
 
-  public MemberModifyHandler( MemberDao memberDao) {
+  public MemberModifyHandler(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
 
   @Override
   protected void action(Prompt prompt) {
+    try {
       int no = prompt.inputInt("번호? ");
 
       Member old = memberDao.findBy(no);
@@ -35,5 +34,8 @@ public class MemberModifyHandler extends AbstractMenuHandler {
       memberDao.update(member);
       prompt.println("회원을 변경했습니다.");
 
+    } catch (Exception e) {
+      prompt.println("변경 오류!");
     }
+  }
 }

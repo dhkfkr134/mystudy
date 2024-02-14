@@ -34,6 +34,7 @@ public class Prompt implements AutoCloseable {
     return Date.valueOf(this.input(title, args));
   }
 
+  @Override
   public void close() {
     this.keyIn.close();
   }

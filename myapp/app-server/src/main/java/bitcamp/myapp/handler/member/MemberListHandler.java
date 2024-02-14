@@ -3,9 +3,7 @@ package bitcamp.myapp.handler.member;
 import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.DBConnectionPool;
 import bitcamp.util.Prompt;
-import java.sql.Connection;
 import java.util.List;
 
 public class MemberListHandler extends AbstractMenuHandler {
@@ -18,6 +16,7 @@ public class MemberListHandler extends AbstractMenuHandler {
 
   @Override
   protected void action(Prompt prompt) {
+    try {
       prompt.printf("%-4s\t%-10s\t%30s\t%s\n", "번호", "이름", "이메일", "가입일");
 
       List<Member> list = memberDao.findAll();
@@ -29,5 +28,8 @@ public class MemberListHandler extends AbstractMenuHandler {
             member.getEmail(),
             member.getCreatedDate());
       }
+    } catch (Exception e) {
+      prompt.println("목록 오류!");
     }
+  }
 }

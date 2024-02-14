@@ -3,8 +3,7 @@ package bitcamp.myapp.handler;
 import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.util.Prompt;
 
-public class AboutHendler extends AbstractMenuHandler {
-
+public class AboutHandler extends AbstractMenuHandler {
 
   @Override
   protected void action(Prompt prompt) {

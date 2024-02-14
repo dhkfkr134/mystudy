@@ -1,38 +1,72 @@
 package bitcamp.myapp.handler.board;
 
 import bitcamp.menu.AbstractMenuHandler;
+import bitcamp.myapp.dao.AttachedFileDao;
 import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.Member;
 import bitcamp.util.Prompt;
-import java.util.Date;
-import java.util.List;
+import bitcamp.util.TransactionManager;
+import java.util.ArrayList;
 
-// 게시글의 '등록' 메뉴를 선택했을 때 작업을 수행하는 클래스
-// - 반드시 MenuHandler 규칙에 따라 클래스를 작성해야 한다.
-//
 public class BoardAddHandler extends AbstractMenuHandler {
 
-
+  private TransactionManager txManager;
   private BoardDao boardDao;
+  private AttachedFileDao attachedFileDao;
 
-  public BoardAddHandler(BoardDao boardDao, Prompt prompt) {
-    super(prompt);
+  public BoardAddHandler(TransactionManager txManager, BoardDao boardDao,
+      AttachedFileDao attachedFileDao) {
+    this.txManager = txManager;
     this.boardDao = boardDao;
+    this.attachedFileDao = attachedFileDao;
   }
 
+  @Override
+  protected void action(Prompt prompt) {
 
-  public void action() {
+    Member loginUser = (Member) prompt.getSession().getAttribute("loginUser");
+    if (loginUser == null) {
+      prompt.println("로그인하시기 바랍니다!");
+      return;
+    }
+
     Board board = new Board();
-    board.setTitle(this.prompt.input("제목? "));
-    board.setContent(this.prompt.input("내용? "));
-    board.setWriter(this.prompt.input("작성자? "));
-    board.setCreatedDate(new Date());
+    board.setTitle(prompt.input("제목? "));
+    board.setContent(prompt.input("내용? "));
+    board.setWriter(loginUser);
 
-    this.boardDao.add(board);
+    ArrayList<AttachedFile> files = new ArrayList<>();
+    while (true) {
+      String filepath = prompt.input("파일?(종료: 그냥 엔터) ");
+      if (filepath.length() == 0) {
+        break;
+      }
+      files.add(new AttachedFile().filePath(filepath));
+    }
 
-    // 레퍼런스를 선언하는 시점에 지정된 타입이 아닌 값을 넣으려고 하면
-    // 컴파일 오류가 발생한다.
-    // 즉 특정 타입만 사용하도록 제한할 수 있는 문법이 제네릭(generic) 이다.
-//    objectRepository.add(new String("Hello"));
+    try {
+      txManager.startTransaction();
+
+      boardDao.add(board);
+
+      if (files.size() > 0) {
+        // 첨부파일 객체에 게시글 번호 저장
+        for (AttachedFile file : files) {
+          file.setBoardNo(board.getNo());
+        }
+        attachedFileDao.addAll(files);
+      }
+
+      txManager.commit();
+
+    } catch (Exception e) {
+      try {
+        txManager.rollback();
+      } catch (Exception e2) {
+      }
+      prompt.println("게시글 등록 오류!");
+    }
   }
 }
