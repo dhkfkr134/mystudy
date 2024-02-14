@@ -38,6 +38,14 @@ public class ConnectionProxy implements Connection {
     }
   }
 
+  public void realClose(){
+    try {
+      original.close();
+    } catch (Exception e){
+
+    }
+  }
+
   @Override
   public Statement createStatement() throws SQLException {
     return original.createStatement();

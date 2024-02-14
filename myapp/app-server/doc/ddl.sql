@@ -1,79 +1,52 @@
 -- DDL(Data Definition Language)
+drop table if exists boards restrict;
+drop table if exists board_files restrict;
+drop table if exists assignments restrict;
+drop table if exists members restrict;
+
 
 create table boards(
-  board_no int primary key auto_increment,
+  board_no int not null,
   title varchar(255) not null,
   content text not null,
   writer varchar(30) not null,
+  category int not null,
   created_date datetime null default now()
 );
+alter table boards
+  add constraint primary key (board_no),
+  modify column board_no int auto_increment;
 
-insert into boards(title,content,writer,category)
- values('제목1', '내용1','홍길동',1);
-insert into boards(title,content,writer,category)
- values('제목2', '내용2','임꺽정',1);
-insert into boards(title,content,writer,category)
- values('제목3', '내용3','유관순',1);
-insert into boards(title,content,writer,category)
- values('제목4', '내용4','안중근',1);
-insert into boards(title,content,writer,category)
- values('제목5', '내용5','윤봉길',1);
 
-select *
-from boards;
+create table board_files(
+  file_no int not null,
+  file_path varchar(255) not null,
+  board_no int not null
+);
+alter table board_files
+  add constraint primary key (file_no),
+  modify column file_no int not null auto_increment,
+  add constraint board_files_fk foreign key (board_no) references boards(board_no);
 
-select *
-from boards
-where board_no=3;
-
-update boards set
- title='okok',
- content='nono',
- writer='haha'
-where board_no = 3;
-
-delete from boards where board_no=3;
-
-drop table assignment;
 
 create table assignments(
-assignment_no int primary key auto_increment,
+assignment_no int not null,
 title varchar(255) not null,
 content text not null,
 deadline date not null
 );
+alter table assignments
+  add constraint primary key (assignment_no),
+  modify column assignment_no int not null auto_increment;
 
-insert into assignments(title,content,deadline)
- values('제목1', '내용1','2023-12-12');
-insert into assignments(title,content,deadline)
- values('제목2', '내용2','2024-01-01');
-insert into assignments(title,content,deadline)
- values('제목3', '내용3','2024-01-28');
-insert into assignments(title,content,deadline)
- values('제목4', '내용4','2023-11-11');
-insert into assignments(title,content,deadline)
- values('제목5', '내용5','2023-09-09');
 
 create table members(
-member_no int primary key auto_increment,
+member_no int not null,
 email varchar(255) not null,
 name varchar(255) not null,
 password varchar(100) not null,
 created_date datetime null default now()
 );
-
-insert into members(email,name,password)
- values('dhkfkr134@naver.com','kim',sha2('1111',256));
-insert into members(email,name,password)
- values('dhkfkr13@naver.com','kimju',sha2('111',256));
-insert into members(email,name,password)
- values('dhkfkr4@naver.com','kimjung',sha2('11',256));
-insert into members(email,name,password)
- values('dhkfkr@naver.com','kimjungwon',sha2('1',256));
-insert into members(email,name,password)
- values('dhk@naver.com','won',sha2('1112',256));
-
-alter table boards
- add column category int not null;
-
-<update boards set category=1;>
+alter table members
+ add constraint primary key (member_no),
+ modify column member_no int not null auto_increment;
