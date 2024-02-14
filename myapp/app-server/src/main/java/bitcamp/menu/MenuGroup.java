@@ -4,7 +4,6 @@ import bitcamp.util.Prompt;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 public class MenuGroup extends AbstractMenu {
 
@@ -51,7 +50,7 @@ public class MenuGroup extends AbstractMenu {
     }
 
     // 메뉴를 나갈 때 breadcrumb 메뉴 경로에서 메뉴 제목을 제거한다.
-    prompt.popPath(this.title);
+    prompt.popPath();
   }
 
   private void printMenu(Prompt prompt) {

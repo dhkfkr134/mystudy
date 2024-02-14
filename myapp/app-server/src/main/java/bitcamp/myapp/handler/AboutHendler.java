@@ -1,6 +1,5 @@
 package bitcamp.myapp.handler;
 
-import bitcamp.menu.AbstractMenu;
 import bitcamp.menu.AbstractMenuHandler;
 import bitcamp.util.Prompt;
 

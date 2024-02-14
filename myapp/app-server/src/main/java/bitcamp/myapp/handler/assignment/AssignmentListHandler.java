@@ -10,23 +10,18 @@ import java.util.List;
 
 public class AssignmentListHandler extends AbstractMenuHandler {
 
-  private DBConnectionPool connectionPool;
   private AssignmentDao assignmentDao;
 
-  public AssignmentListHandler(DBConnectionPool connectionPool, AssignmentDao assignmentDao) {
+  public AssignmentListHandler(AssignmentDao assignmentDao) {
     this.assignmentDao = assignmentDao;
-    this.connectionPool = connectionPool;
   }
 
   @Override
   protected void action(Prompt prompt) {
-    Connection con = null;
     try {
-      con = connectionPool.getConnection();
+
       prompt.printf("%-4s\t%-20s\t%s\n", "번호", "과제", "제출마감일");
-
       List<Assignment> list = assignmentDao.findAll();
-
       for (Assignment assignment : list) {
         prompt.printf("%-4d\t%-20s\t%s\n",
             assignment.getNo(),
@@ -35,8 +30,7 @@ public class AssignmentListHandler extends AbstractMenuHandler {
       }
     } catch (Exception e) {
       prompt.println("삭제 오류!");
-    } finally {
-      connectionPool.returnConnection(con);
+      e.printStackTrace();
     }
   }
 }

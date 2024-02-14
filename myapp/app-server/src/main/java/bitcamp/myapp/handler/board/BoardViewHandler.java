@@ -9,19 +9,14 @@ import java.sql.Connection;
 
 public class BoardViewHandler extends AbstractMenuHandler {
 
-  private DBConnectionPool connectionPool;
   private BoardDao boardDao;
 
-  public BoardViewHandler(DBConnectionPool connectionPool, BoardDao boardDao) {
+  public BoardViewHandler(BoardDao boardDao) {
     this.boardDao = boardDao;
-    this.connectionPool = connectionPool;
   }
 
   @Override
   protected void action(Prompt prompt) {
-    Connection con = null;
-    try {
-      con = connectionPool.getConnection();
       int no = prompt.inputInt("번호? ");
 
       Board board = boardDao.findBy(no);
@@ -30,15 +25,11 @@ public class BoardViewHandler extends AbstractMenuHandler {
         return;
       }
 
-      prompt.printf("번호: %d\n", board.getNo());
+      prompt.printf("번호: %d\n"
+          + "", board.getNo());
       prompt.printf("제목: %s\n", board.getTitle());
       prompt.printf("내용: %s\n", board.getContent());
       prompt.printf("작성자: %s\n", board.getWriter());
       prompt.printf("작성일: %1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS\n", board.getCreatedDate());
-    } catch (Exception e) {
-      prompt.println("삭제 오류!");
-    } finally {
-      connectionPool.returnConnection(con);
     }
-  }
 }

@@ -8,20 +8,14 @@ import bitcamp.util.Prompt;
 import java.sql.Connection;
 
 public class BoardModifyHandler extends AbstractMenuHandler {
-
-  private DBConnectionPool connectionPool;
   private BoardDao boardDao;
 
-  public BoardModifyHandler(DBConnectionPool connectionPool, BoardDao boardDao) {
+  public BoardModifyHandler(BoardDao boardDao) {
     this.boardDao = boardDao;
-    this.connectionPool = connectionPool;
   }
 
   @Override
   protected void action(Prompt prompt) {
-    Connection con = null;
-    try {
-      con = connectionPool.getConnection();
       int no = prompt.inputInt("번호? ");
 
       Board oldBoard = boardDao.findBy(no);
@@ -39,10 +33,5 @@ public class BoardModifyHandler extends AbstractMenuHandler {
 
       boardDao.update(board);
       prompt.println("게시글을 변경했습니다.");
-    } catch (Exception e) {
-      prompt.println("삭제 오류!");
-    } finally {
-      connectionPool.returnConnection(con);
     }
-  }
 }

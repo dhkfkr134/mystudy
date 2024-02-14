@@ -9,20 +9,15 @@ import java.sql.Connection;
 
 public class AssignmentViewHandler extends AbstractMenuHandler {
 
-  private DBConnectionPool connectionPool;
   private AssignmentDao assignmentDao;
 
-  public AssignmentViewHandler(DBConnectionPool connectionPool, AssignmentDao assignmentDao) {
+  public AssignmentViewHandler( AssignmentDao assignmentDao) {
     this.assignmentDao = assignmentDao;
-    this.connectionPool = connectionPool;
   }
 
   @Override
   protected void action(Prompt prompt) {
-    Connection con = null;
     try {
-      con = connectionPool.getConnection();
-      try {
         int no = prompt.inputInt("번호? ");
         Assignment assignment = assignmentDao.findBy(no);
         if (assignment == null) {
@@ -37,12 +32,6 @@ public class AssignmentViewHandler extends AbstractMenuHandler {
 
       } catch (Exception e) {
         prompt.println("조회 오류!");
-      }
-    } catch (Exception e) {
-      prompt.println("삭제 오류!");
-    } finally {
-      connectionPool.returnConnection(con);
     }
   }
-
 }
