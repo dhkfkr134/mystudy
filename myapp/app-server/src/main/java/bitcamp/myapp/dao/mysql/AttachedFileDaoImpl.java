@@ -26,8 +26,8 @@ public class AttachedFileDaoImpl implements AttachedFileDao {
         PreparedStatement pstmt = con.prepareStatement(
             "insert into board_files(file_path,board_no) values(?,?)")) {
 
-      pstmt.setString(1, file.getFilepath());
-      pstmt.setInt(4, file.getBoardNo());
+      pstmt.setString(1, file.getFilePath());
+      pstmt.setInt(2, file.getBoardNo());
 
       pstmt.executeUpdate();
 
@@ -45,7 +45,7 @@ public class AttachedFileDaoImpl implements AttachedFileDao {
             "insert into board_files(file_path,board_no) values(?,?)")) {
 
       for (AttachedFile file : files) {
-        pstmt.setString(1, file.getFilepath());
+        pstmt.setString(1, file.getFilePath());
         pstmt.setInt(2, file.getBoardNo());
         pstmt.executeUpdate();
       }
@@ -99,7 +99,7 @@ public class AttachedFileDaoImpl implements AttachedFileDao {
         while (rs.next()) {
           AttachedFile file = new AttachedFile();
           file.setNo(rs.getInt("file_no"));
-          file.setFilepath(rs.getString("file_path"));
+          file.setFilePath(rs.getString("file_path"));
           file.setBoardNo(rs.getInt("board_no"));
 
           list.add(file);

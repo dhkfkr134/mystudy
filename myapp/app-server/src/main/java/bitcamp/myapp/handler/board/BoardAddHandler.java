@@ -1,20 +1,26 @@
 package bitcamp.myapp.handler.board;
 
 import bitcamp.menu.AbstractMenuHandler;
+import bitcamp.myapp.dao.AttachedFileDao;
 import bitcamp.myapp.dao.BoardDao;
+import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.DBConnectionPool;
 import bitcamp.util.Prompt;
 import bitcamp.util.TransactionManager;
 import java.sql.Connection;
+import java.util.ArrayList;
+import org.checkerframework.checker.units.qual.A;
 
 public class BoardAddHandler extends AbstractMenuHandler {
 
   private BoardDao boardDao;
+  private AttachedFileDao attachedFileDao;
   private TransactionManager txManager;
 
-  public BoardAddHandler(TransactionManager txManager, BoardDao boardDao) {
+  public BoardAddHandler(TransactionManager txManager, BoardDao boardDao, AttachedFileDao attachedFileDao) {
     this.boardDao = boardDao;
+    this.attachedFileDao = attachedFileDao;
     this.txManager = txManager;
   }
 
@@ -25,16 +31,31 @@ public class BoardAddHandler extends AbstractMenuHandler {
     board.setContent(prompt.input("내용? "));
     board.setWriter(prompt.input("작성자? "));
 
-    Connection con = null;
+    ArrayList<AttachedFile> files = new ArrayList<>();
+    while (true) {
+      String filepath = prompt.input("파일?(종료: 그냥 엔터)");
+      if (filepath.isEmpty()){
+        break;
+      }
+      files.add(new AttachedFile().filePath(filepath));
+      System.out.println("boardAddHandler-파일입력");
+    }
+
     try {
       txManager.startTransaction();
       boardDao.add(board);
-      boardDao.add(board);
-      Thread.sleep(10000);
-      boardDao.add(board);
-      txManager.rollback();
+      if(!files.isEmpty()){
+        for(AttachedFile file : files){
+          file.setBoardNo((board.getNo()));
+        }
+        attachedFileDao.addAll(files);
+      }
+      txManager.commit();
     } catch (Exception e){
-      try {con.rollback();} catch (Exception e2){}
+      e.printStackTrace();
+      try {
+        txManager.rollback();
+      } catch (Exception e2){}
     }
   }
 }

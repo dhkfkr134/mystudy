@@ -2,9 +2,13 @@ package bitcamp.myapp.vo;
 
 public class AttachedFile {
   private int no;
-  private String filepath;
+  private String filePath;
   private int boardNo;
 
+  public AttachedFile filePath(String filePath){
+    this.filePath = filePath;
+    return this;
+  }
 
   public int getNo() {
     return no;
@@ -14,12 +18,12 @@ public class AttachedFile {
     this.no = no;
   }
 
-  public String getFilepath() {
-    return filepath;
+  public String getFilePath() {
+    return filePath;
   }
 
-  public void setFilepath(String filepath) {
-    this.filepath = filepath;
+  public void setFilePath(String filePath) {
+    this.filePath = filePath;
   }
 
   public int getBoardNo() {

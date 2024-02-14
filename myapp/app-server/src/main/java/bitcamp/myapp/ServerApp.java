@@ -2,9 +2,11 @@ package bitcamp.myapp;
 
 import bitcamp.menu.MenuGroup;
 import bitcamp.myapp.dao.AssignmentDao;
+import bitcamp.myapp.dao.AttachedFileDao;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.dao.mysql.AssignmentDaoImpl;
+import bitcamp.myapp.dao.mysql.AttachedFileDaoImpl;
 import bitcamp.myapp.dao.mysql.BoardDaoImpl;
 import bitcamp.myapp.dao.mysql.MemberDaoImpl;
 import bitcamp.myapp.handler.AboutHendler;
@@ -41,6 +43,8 @@ public class ServerApp {
 
   DBConnectionPool connectionPool;
 
+  AttachedFileDao attachedFileDao;
+
   BoardDao boardDao;
   BoardDao greetingDao;
   AssignmentDao assignmentDao;
@@ -68,6 +72,7 @@ public class ServerApp {
           "jdbc:mysql://localhost/studydb", "study", "Bitcamp!@#123");
       txManager = new TransactionManager(connectionPool);
 
+      attachedFileDao = new AttachedFileDaoImpl(connectionPool);
       boardDao = new BoardDaoImpl(connectionPool, 1);
       greetingDao = new BoardDaoImpl(connectionPool, 2);
       assignmentDao = new AssignmentDaoImpl(connectionPool);
@@ -90,8 +95,8 @@ public class ServerApp {
     assignmentMenu.addItem("목록", new AssignmentListHandler( assignmentDao));
 
     MenuGroup boardMenu = mainMenu.addGroup("게시글");
-    boardMenu.addItem("등록", new BoardAddHandler(txManager, boardDao));
-    boardMenu.addItem("조회", new BoardViewHandler( boardDao));
+    boardMenu.addItem("등록", new BoardAddHandler(txManager, boardDao, attachedFileDao));
+    boardMenu.addItem("조회", new BoardViewHandler( boardDao,attachedFileDao));
     boardMenu.addItem("변경", new BoardModifyHandler( boardDao));
     boardMenu.addItem("삭제", new BoardDeleteHandler( boardDao));
     boardMenu.addItem("목록", new BoardListHandler( boardDao));
@@ -104,8 +109,8 @@ public class ServerApp {
     memberMenu.addItem("목록", new MemberListHandler( memberDao));
 
     MenuGroup greetingMenu = mainMenu.addGroup("가입인사");
-    greetingMenu.addItem("등록", new BoardAddHandler(txManager, greetingDao));
-    greetingMenu.addItem("조회", new BoardViewHandler( greetingDao));
+    greetingMenu.addItem("등록", new BoardAddHandler(txManager, greetingDao, attachedFileDao));
+    greetingMenu.addItem("조회", new BoardViewHandler( greetingDao, attachedFileDao));
     greetingMenu.addItem("변경", new BoardModifyHandler( greetingDao));
     greetingMenu.addItem("삭제", new BoardDeleteHandler(greetingDao));
     greetingMenu.addItem("목록", new BoardListHandler(greetingDao));

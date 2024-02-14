@@ -13,6 +13,7 @@ public class Board implements Serializable {
   private String content;
   private String writer;
   private Date createdDate;
+  private int fileCount;
   private List<AttachedFile> files;
   
   @Override
@@ -64,6 +65,14 @@ public class Board implements Serializable {
 
   public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
+  }
+
+  public int getFileCount() {
+    return fileCount;
+  }
+
+  public void setFileCount(int fileCount) {
+    this.fileCount = fileCount;
   }
 
   public List<AttachedFile> getFiles() {
