@@ -6,6 +6,7 @@ import bitcamp.myapp.dao.mysql.AttachedFileDaoImpl;
 import bitcamp.myapp.dao.mysql.BoardDaoImpl;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.Member;
 import bitcamp.util.DBConnectionPool;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,59 +49,44 @@ public class BoardFileDeleteServlet extends HttpServlet {
 
     out.println("<a href='/board/form.html'>새 글</a>");
 
+    Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+    if(loginUser ==null){
+      out.println("<p>로그링하시기 바랍니다</p>.");
+      out.println("</body>");
+      out.println("</html>");
+    }
     try {
-      int no = Integer.parseInt(request.getParameter("no"));
+      int fileNo = Integer.parseInt(request.getParameter("no"));
 
-      Board board = boardDao.findBy(no);
-      if (board == null) {
+      AttachedFile file = attachedFileDao.findByNo(fileNo);
+      if(file == null){
         out.println("게시글 번호가 유효하지 않습니다.");
         out.println("</body>");
         out.println("</html>");
         return;
       }
+      Member writer = boardDao.findBy(file.getBoardNo()).getWriter();
 
-      List<AttachedFile> files = attachedFileDao.findAllByBoardNo(no);
-
-      out.println("<form action='/board/add'>");
-      out.println("<div>");
-      out.printf("제목: <input type='text' name='%s'>\n",board.getTitle());
-      out.println("</div>");
-      out.println("<div>");
-      out.printf("내용: <textarea name='content'>%s</textarea>\n",board.getContent());
-      out.println("</div>");
-      out.println("<div>");
-      out.println("첨부파일: <input name='Files' type='file' multiple>");
-      out.println("<ul>");
-      for (AttachedFile file : files){
-        out.printf("<li>%s <a href='/board/deleteFile?no=%d'>삭제</a></li>\n",
-            file.getFilePath(),
-            file.getNo());
+      if (writer.getNo() != loginUser.getNo()) {
+        out.println("<p>권한이 없습니다.</p>");
+        out.println("</body>");
+        out.println("</html>");
+        return;
       }
-      out.println("</ul>");
-      out.println("</div>");
-      out.println("<div>");
-      out.println("<button>등록</button>");
-      out.println("</div>");
-      out.println("</form>");
+
+      attachedFileDao.delete(fileNo);
+      out.println("<script>");
+      out.println("history.back();");
+      out.println("</script>");
 
     } catch (Exception e) {
-      out.println("<p>조회 오류!</p>");
+      out.println("<p>삭제 오류!</p>");
+      out.println("<pre>");
+      e.printStackTrace(out);
+      out.println("</pre>");
     }
     out.println("</body>");
     out.println("</html>");
 
   }
 }
-/*
-[조회]
-번호? 7
-번호: 7
-제목: a2
-내용: aa2
-작성자: a
-작성일: 2024-02-14 00:00:00
-첨부파일:
-  a1.gif
-  a2.gif
-  a3.gif
- */

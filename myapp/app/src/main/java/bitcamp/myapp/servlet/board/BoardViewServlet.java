@@ -63,16 +63,19 @@ public class BoardViewServlet extends HttpServlet {
 
       out.println("<form action='/board/add'>");
       out.println("<div>");
-      out.printf("제목: <input type='text' name='%s'>\n",board.getTitle());
+      out.printf("제목: <input type='text' name='title',value='%s'>\n",board.getTitle());
       out.println("</div>");
       out.println("<div>");
       out.printf("내용: <textarea name='content'>%s</textarea>\n",board.getContent());
       out.println("</div>");
       out.println("<div>");
+      out.printf("작성자: <input type='text' value='%s'>\n",board.getWriter().getName());
+      out.println("</div>");
+      out.println("<div>");
       out.println("첨부파일: <input name='Files' type='file' multiple>");
       out.println("<ul>");
       for (AttachedFile file : files){
-        out.printf("<li>%s <a href='/board/deleteFile?no=%d'>삭제</a></li>\n",
+        out.printf("<li>%s <a href='/board/file/delete?no=%d'>삭제</a></li>\n",
             file.getFilePath(),
             file.getNo());
       }
@@ -85,22 +88,12 @@ public class BoardViewServlet extends HttpServlet {
 
     } catch (Exception e) {
       out.println("<p>조회 오류!</p>");
+      out.println("<pre>");
+      e.printStackTrace(out);
+      out.println("</pre>");
     }
     out.println("</body>");
     out.println("</html>");
 
   }
 }
-/*
-[조회]
-번호? 7
-번호: 7
-제목: a2
-내용: aa2
-작성자: a
-작성일: 2024-02-14 00:00:00
-첨부파일:
-  a1.gif
-  a2.gif
-  a3.gif
- */
