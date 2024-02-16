@@ -70,10 +70,10 @@ public class BoardDeleteServlet extends HttpServlet {
 
       attachedFileDao.deleteAll(no);
       boardDao.delete(no);
-
-      out.println("<script>");
-      out.println("  location.href = '/board/list'");
-      out.println("</script>");
+//
+//      out.println("<script>");
+//      out.println("  location.href = '/board/list'");
+//      out.println("</script>");s
 
     } catch (Exception e) {
       out.println("<p>삭제 오류!</p>");
