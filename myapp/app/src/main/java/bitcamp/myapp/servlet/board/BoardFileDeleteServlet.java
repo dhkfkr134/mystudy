@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 // 클라이언트에서 이 요청이 오면 실행해라
-@WebServlet("/board/file/Delete")
+@WebServlet("/board/file/delete")
 public class BoardFileDeleteServlet extends HttpServlet {
 
   private BoardDao boardDao;
@@ -76,7 +76,7 @@ public class BoardFileDeleteServlet extends HttpServlet {
 
       attachedFileDao.delete(fileNo);
       out.println("<script>");
-      out.println("history.back();");
+      out.println("location.href=document.referrer;");
       out.println("</script>");
 
     } catch (Exception e) {
