@@ -50,10 +50,8 @@ public class App {
         ctx.setResources(resources);
         // 톰캣 서버 구동
         tomcat.start();
-        new AnnotationUsageScanner().start();
         // 톰캣 서버를 구동한 후 종료될 때까지 JVM을 끝내지 말고 기다린다.
         tomcat.getServer().await();
-
         System.out.println("서버 종료!");
     }
 

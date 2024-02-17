@@ -1,6 +1,5 @@
 package com.eomcs.web;
 
-import com.eomcs.CustomServlet;
 import java.io.IOException;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -8,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
-@CustomServlet
 @WebServlet("/hello")
 public class HelloServlet implements Servlet {
 
