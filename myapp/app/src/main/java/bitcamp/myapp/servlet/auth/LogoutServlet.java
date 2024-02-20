@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutServlet extends HttpServlet {
 
   @Override
-  protected void service(HttpServletRequest request, HttpServletResponse response)
+  public void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
+    request.getSession().invalidate();
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -27,8 +29,7 @@ public class LogoutServlet extends HttpServlet {
     out.println("<body>");
     out.println("<h1>과제 관리 시스템</h1>");
     out.println("<h2>로그아웃</h2>");
-    out.println("로그아웃 했습니다!");
-
+    out.println("<p>로그아웃 했습니다!</p>");
     out.println("</body>");
     out.println("</html>");
   }
