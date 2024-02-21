@@ -7,42 +7,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 
-// 서블릿 컨테이너가 관리하는 컴포넌트
-// => 서블릿, 필터, 리스너
-//
-// 필터 만들기
-// => javax.servlet.Filter 인터페이스 규칙에 따라 작성한다.
-//
-// 필터 배포하기
-// => DD 파일(web.xml)에 설정하기
-//      <!-- 필터 등록 -->
-//      <filter>
-//          <filter-name>f01</filter-name>
-//          <filter-class>com.eomcs.web.ex02.Filter01</filter-class>
-//      </filter>
-//
-//      <!-- 필터를 적용할 URL 설정 -->
-//      <filter-mapping>
-//          <filter-name>f01</filter-name>
-//          <url-pattern>/ex02/*</url-pattern>
-//      </filter-mapping>
-// => 애노테이션으로 설정하기
-//      @WebFilter(URL)
-//
-// 필터의 용도
-// => 서블릿을 실행하기 전후에 필요한 작업을 수행
-// => 서블릿 실행 전
-// - 웹브라우저가 보낸 암호화된 파라미터 값을 서블릿으로 전달하기 전에 암호 해제하기
-// - 웹브라우저가 보낸 압축된 데이터를 서블릿으로 전달하기 전에 압축 해제하기
-// - 서블릿의 실행을 요청할 권한이 있는지 검사하기
-// - 로그인 사용자인지 검사하기
-// - 로그 남기기
-// => 서블릿 실행 후
-// - 클라이언트로 보낼 데이터를 압축하기
-// - 클라이언트로 보낼 데이터를 암호화시키기
-//
-//@WebFilter("/ex02/*")
+@WebFilter("/ex02/*")
 public class Filter01 implements Filter {
 
   @Override
@@ -73,7 +40,7 @@ public class Filter01 implements Filter {
     // => 서블릿을 실행한 후 다시 필터로 리턴한다.
     System.out.println("Filter01.doFilter() : 시작");
 
-    // 다음 필터를 실행한다.
+    // 필터를 실행한다.
     // 만약 다음 필터가 없으면,
     // 요청한 서블릿의 service() 메서드를 호출한다.
     // service() 메서드 호출이 끝나면 리턴된다.

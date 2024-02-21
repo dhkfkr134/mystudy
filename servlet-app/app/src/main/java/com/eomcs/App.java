@@ -48,10 +48,9 @@ public class App {
 
         // 웹 애플리케이션 설정 정보를 웹 애플리케이션 환경 정보에 등록
         ctx.setResources(resources);
-
         // 톰캣 서버 구동
         tomcat.start();
-
+        new AnnotationUsageScanner().start();
         // 톰캣 서버를 구동한 후 종료될 때까지 JVM을 끝내지 말고 기다린다.
         tomcat.getServer().await();
 
