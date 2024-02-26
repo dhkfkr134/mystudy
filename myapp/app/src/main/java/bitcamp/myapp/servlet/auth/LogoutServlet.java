@@ -16,6 +16,6 @@ public class LogoutServlet extends HttpServlet {
 
     request.getSession().invalidate();
 
-    response.sendRedirect("/");
+    response.sendRedirect("/index.html");
   }
 }
