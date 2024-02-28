@@ -75,7 +75,7 @@ public class BoardListServlet extends HttpServlet {
     } catch (Exception e) {
       request.setAttribute("message", String.format("%s 목록 오류!", title));
       request.setAttribute("exception", e);
-      request.getRequestDispatcher("/error").forward(request, response);
+      request.getRequestDispatcher("/error.jsp").forward(request, response);
     }
   }
 }
