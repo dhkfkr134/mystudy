@@ -11,7 +11,7 @@
 <jsp:include page="/header.jsp"></jsp:include>
 
 <%
-Assignment assignment = (Assignment) request.getAttribute("assignment");
+  Assignment assignment = (Assignment) request.getAttribute("assignment");
 %>
 <h1>과제</h1>
 <form action='/assignment/update' method='post'>
