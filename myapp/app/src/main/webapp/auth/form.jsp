@@ -8,9 +8,7 @@
 <body>
 
 <jsp:include page="/header.jsp"></jsp:include>
-
 <h1>로그인</h1>
-
 <form action='/auth/login' method='post'>
 <div>
     이메일: <input name='email' type='text'
@@ -22,7 +20,6 @@
 <button>로그인</button>
 <input type='checkbox' name='saveEmail'> 이메일 저장
 </form>
-
 <jsp:include page="/footer.jsp"></jsp:include>
 
 </body>
