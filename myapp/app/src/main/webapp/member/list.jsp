@@ -21,7 +21,7 @@
       <tr>
         <td>${member.no}</td>
         <td>
-   <c:choose>
+  <c:choose>
     <c:when test="${not empty member.photo}">
         <img src='/upload/${member.photo}' height='20px'>
     </c:when>
@@ -29,9 +29,9 @@
         <img src='/img/default-photo.jpeg' height='20px'>
     </c:otherwise>
   </c:choose>
-        <a href='/app/member/view?no=${member.no}'>${member.getName()}</a></td>
-        <td>${member.getEmail()}</td>
-        <td>${member.getCreatedDate()}</td>
+        <a href='/app/member/view?no=${member.no}'>${member.name}</a></td>
+        <td>${member.email}</td>
+        <td>${member.createdDate}</td>
       </tr>
 </c:forEach>
     </tbody>

@@ -31,7 +31,7 @@ public class AssignmentViewServlet extends HttpServlet {
       }
 
       request.setAttribute("assignment", assignment);
-      request.setAttribute("viewUrl","/assignment/view.jsp");
+      request.setAttribute("viewUrl", "/assignment/view.jsp");
 
     } catch (Exception e) {
       request.setAttribute("exception", e);

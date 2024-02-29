@@ -28,7 +28,7 @@ public class AssignmentDeleteServlet extends HttpServlet {
         throw new Exception("과제 번호가 유효하지 않습니다.");
       }
 
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
 
     } catch (Exception e) {
       request.setAttribute("exception", e);

@@ -23,7 +23,8 @@ public class AssignmentListServlet extends HttpServlet {
       throws ServletException, IOException {
     try {
       request.setAttribute("list", assignmentDao.findAll());
-      request.setAttribute("viewUrl","/assignment/list.jsp");
+      request.setAttribute("viewUrl", "/assignment/list.jsp");
+
     } catch (Exception e) {
       request.setAttribute("exception", e);
     }

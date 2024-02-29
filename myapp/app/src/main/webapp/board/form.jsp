@@ -10,12 +10,7 @@
 
 <jsp:include page="/header.jsp"></jsp:include>
 
-<h1><%=request.getAttribute("boardName")%></h1>
-
-<%
-  String boardName = (String) request.getAttribute("boardName");
-  int category = (int) request.getAttribute("category");
-%>
+<h1>${boardName}</h1>
 
 <form action='/board/add?category=${category}' method='post' enctype='multipart/form-data'>
   <input name='category' type='hidden' value='${category}'>
@@ -25,15 +20,17 @@
   <div>
         내용: <textarea name='content'></textarea>
   </div>
-  <c:if test="${category == 1}">
+<c:if test="${category == 1}">
   <div>
         첨부파일: <input multiple name='files' type='file'>
   </div>
-  </c:if>
+</c:if>
+
 <div>
   <button>등록</button>
 </div>
 </form>
+
 <jsp:include page="/footer.jsp"></jsp:include>
 
 </body>

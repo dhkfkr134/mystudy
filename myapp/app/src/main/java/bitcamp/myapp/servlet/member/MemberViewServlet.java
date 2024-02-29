@@ -29,7 +29,6 @@ public class MemberViewServlet extends HttpServlet {
       if (member == null) {
         throw new Exception("회원 번호가 유효하지 않습니다.");
       }
-
       request.setAttribute("member", member);
       request.setAttribute("viewUrl", "/member/view.jsp");
 
