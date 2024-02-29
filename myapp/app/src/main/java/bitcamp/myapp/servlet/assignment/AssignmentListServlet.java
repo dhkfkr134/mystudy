@@ -1,10 +1,7 @@
 package bitcamp.myapp.servlet.assignment;
 
 import bitcamp.myapp.dao.AssignmentDao;
-import bitcamp.myapp.vo.Assignment;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,9 +21,8 @@ public class AssignmentListServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
     try {
-      request.setAttribute("list",assignmentDao.findAll());
+      request.setAttribute("list", assignmentDao.findAll());
       request.getRequestDispatcher("/assignment/list.jsp").forward(request, response);
 
     } catch (Exception e) {
@@ -34,7 +30,5 @@ public class AssignmentListServlet extends HttpServlet {
       request.setAttribute("exception", e);
       request.getRequestDispatcher("/error.jsp").forward(request, response);
     }
-
-
   }
 }

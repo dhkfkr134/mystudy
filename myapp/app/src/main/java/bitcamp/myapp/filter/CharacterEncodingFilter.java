@@ -1,6 +1,5 @@
 package bitcamp.myapp.filter;
 
-
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,16 +15,17 @@ public class CharacterEncodingFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     encoding = filterConfig.getInitParameter("encoding");
-    if (encoding == null){
+    if (encoding == null) {
       encoding = "UTF-8";
     }
   }
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-      throws IOException, ServletException {
+  public void doFilter(ServletRequest request, ServletResponse response,
+      FilterChain filterChain) throws IOException, ServletException {
 
     request.setCharacterEncoding(encoding);
-    filterChain.doFilter(request,response);
+
+    filterChain.doFilter(request, response);
   }
 }

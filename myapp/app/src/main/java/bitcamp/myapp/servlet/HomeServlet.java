@@ -1,7 +1,6 @@
 package bitcamp.myapp.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +14,7 @@ public class HomeServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    request.getRequestDispatcher("/home.jsp").forward(request,response);
+    request.getRequestDispatcher("/home.jsp").forward(request, response);
+
   }
 }

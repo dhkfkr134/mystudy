@@ -3,7 +3,6 @@ package bitcamp.myapp.servlet.member;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +30,8 @@ public class MemberViewServlet extends HttpServlet {
         throw new Exception("회원 번호가 유효하지 않습니다.");
       }
 
-      request.setAttribute("member",member);
-      request.getRequestDispatcher("/member/view.jsp").forward(request,response);
+      request.setAttribute("member", member);
+      request.getRequestDispatcher("/member/view.jsp").forward(request, response);
 
     } catch (Exception e) {
       request.setAttribute("message", "조회 오류!");

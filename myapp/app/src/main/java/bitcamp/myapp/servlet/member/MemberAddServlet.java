@@ -3,7 +3,6 @@ package bitcamp.myapp.servlet.member;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -29,7 +28,9 @@ public class MemberAddServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    request.getRequestDispatcher("/member/form.jsp").forward(request,response);
+
+    request.getRequestDispatcher("/member/form.jsp").forward(request, response);
+
   }
 
   @Override
@@ -37,7 +38,6 @@ public class MemberAddServlet extends HttpServlet {
       throws ServletException, IOException {
 
     try {
-
       Member member = new Member();
       member.setEmail(request.getParameter("email"));
       member.setName(request.getParameter("name"));

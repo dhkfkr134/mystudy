@@ -1,5 +1,5 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-<%@page import="bitcamp.myapp.vo.Assignment"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ page import="bitcamp.myapp.vo.Assignment"%>
 <!DOCTYPE html>
 <html lang='en'>
   <head>
@@ -10,10 +10,10 @@
 
 <jsp:include page="/header.jsp"></jsp:include>
 
+<h1>과제</h1>
 <%
   Assignment assignment = (Assignment) request.getAttribute("assignment");
 %>
-<h1>과제</h1>
 <form action='/assignment/update' method='post'>
 <div>
   번호: <input readonly name='no' type='text' value='<%=assignment.getNo()%>'>
@@ -32,7 +32,7 @@
   <a href='/assignment/delete?no=<%=assignment.getNo()%>'>[삭제]</a>
 </div>
 </form>
-      
+
 <jsp:include page="/footer.jsp"></jsp:include>
 
 </body>
