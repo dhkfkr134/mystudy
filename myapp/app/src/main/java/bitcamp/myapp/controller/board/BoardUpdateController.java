@@ -1,5 +1,6 @@
-package bitcamp.myapp.servlet.board;
+package bitcamp.myapp.controller.board;
 
+import bitcamp.myapp.controller.PageController;
 import bitcamp.myapp.dao.AttachedFileDao;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.AttachedFile;
@@ -18,31 +19,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 10)
-@WebServlet("/board/update")
-public class BoardUpdateServlet extends HttpServlet {
+public class BoardUpdateController implements PageController {
 
   private TransactionManager txManager;
   private BoardDao boardDao;
   private AttachedFileDao attachedFileDao;
   private String uploadDir;
 
-  @Override
-  public void init() {
-    txManager = (TransactionManager) this.getServletContext().getAttribute("txManager");
-    this.boardDao = (BoardDao) this.getServletContext().getAttribute("boardDao");
-    this.attachedFileDao = (AttachedFileDao) this.getServletContext()
-        .getAttribute("attachedFileDao");
-    uploadDir = this.getServletContext().getRealPath("/upload/board");
+  public BoardUpdateController(TransactionManager txManager, BoardDao boardDao,
+      AttachedFileDao attachedFileDao, String uploadDir) {
+    this.txManager = txManager;
+    this.boardDao = boardDao;
+    this.attachedFileDao = attachedFileDao;
+    this.uploadDir = uploadDir;
   }
 
   @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-
+  public String execute(HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
     String boardName = "";
-
-    try {
       int category = Integer.valueOf(request.getParameter("category"));
       boardName = category == 1 ? "게시글" : "가입인사";
 
@@ -85,14 +80,6 @@ public class BoardUpdateServlet extends HttpServlet {
         attachedFileDao.addAll(attachedFiles);
       }
       txManager.commit();
-      request.setAttribute("viewUrl", "redirect:list?category=" + category);
-
-    } catch (Exception e) {
-      try {
-        txManager.rollback();
-      } catch (Exception e2) {
-      }
-      request.setAttribute("exception", e);
-    }
+      return "redirect:list?category=" + category;
   }
 }

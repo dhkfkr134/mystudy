@@ -1,5 +1,6 @@
-package bitcamp.myapp.servlet.assignment;
+package bitcamp.myapp.controller.assignment;
 
+import bitcamp.myapp.controller.PageController;
 import bitcamp.myapp.dao.AssignmentDao;
 import bitcamp.myapp.vo.Assignment;
 import java.io.IOException;
@@ -10,21 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/assignment/update")
-public class AssignmentUpdateServlet extends HttpServlet {
+public class AssignmentUpdateController implements PageController {
 
   private AssignmentDao assignmentDao;
 
-  @Override
-  public void init() {
-    assignmentDao = (AssignmentDao) this.getServletContext().getAttribute("assignmentDao");
+  public AssignmentUpdateController(AssignmentDao assignmentDao) {
+    this.assignmentDao = assignmentDao;
   }
 
   @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-
-    try {
+  public String execute(HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
       int no = Integer.parseInt(request.getParameter("no"));
 
       Assignment old = assignmentDao.findBy(no);
@@ -39,10 +36,7 @@ public class AssignmentUpdateServlet extends HttpServlet {
       assignment.setDeadline(Date.valueOf(request.getParameter("deadline")));
 
       assignmentDao.update(assignment);
-      request.setAttribute("viewUrl", "redirect:list");
+      return "redirect:list";
 
-    } catch (Exception e) {
-      request.setAttribute("exception", e);
-    }
   }
 }
