@@ -1,4 +1,4 @@
-package bitcamp.myapp.servlet;
+package bitcamp.myapp.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/home")
-public class HomeServlet extends HttpServlet {
+public class HomeController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
