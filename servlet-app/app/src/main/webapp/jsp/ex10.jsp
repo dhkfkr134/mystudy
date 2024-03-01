@@ -20,6 +20,7 @@ session.setAttribute("bbb", "nono");
 application.setAttribute("ccc", "haha");
 out.println("okok");
 %>
+${ccc}
 </body>
 </html>
 <%--
