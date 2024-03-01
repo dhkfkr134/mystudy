@@ -8,6 +8,8 @@ repositories {
 
 dependencies {
     testImplementation libs.junit.jupiter
+    // JSTL 라이브러리
+    implementation 'javax.servlet:jstl:1.2'
 
     implementation 'commons-fileupload:commons-fileupload:1.5'
 
