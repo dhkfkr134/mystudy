@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>오류 발생!</h1>
-<%=exception.getMessage()%>
+<%=exception.printStackTrace()%>
 </body>
 </html>
 <%--
