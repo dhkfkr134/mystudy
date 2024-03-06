@@ -112,7 +112,7 @@ public class DispatcherServlet extends HttpServlet {
   private Object[] prepareRequestHandlerArguments(
       Method handler,
       HttpServletRequest request,
-      HttpServletResponse response) throws Exception{
+      HttpServletResponse response) throws Exception {
 
     // 요청 핸들러의 파라미터 정보를 알아낸다.
     Parameter[] methodParams = handler.getParameters();
@@ -131,49 +131,24 @@ public class DispatcherServlet extends HttpServlet {
         args[i] = response;
       } else {
         RequestParam requestParam = methodParam.getAnnotation(RequestParam.class);
-        String requestParameterName = requestParam.value();
-        String requestParameterValue = request.getParameter(requestParameterName);
-        Object value = valueOf(requestParameterValue, methodParam.getType());
-        if (value != null){
-          //파라미터 타입이 primitive data type, String, Date 일 경우 
-        }
-        else{
-          // request handler 가 원하는 값이 Domain 객체라면,
-          // 도메인 객체를 생성한 후
-          // 도메인 객체의 프로퍼티 이름과 일치하는 요청 파라미터 값을 담아서 준다.
+        if (requestParam != null) {
+          // 클라이언트가 보낸 요청 파라미터 값을 원한다면
+          // 그 값을 메서드의 파라미터 타입으로 변환한 후 저장한다.
+          String requestParameterName = requestParam.value();
+          String requestParameterValue = request.getParameter(requestParameterName);
+          args[i] = valueOf(requestParameterValue, methodParam.getType());
 
-          // 1) 도메인 클래스의 생성자 알아냄
-          Constructor constructor = methodParam.getType().getConstructor();
-
-          // 2) 생성자를 이용하여 도메인 객체 생성
-          Object obj = constructor.newInstance();
-
-          // 3) 도메인 클래스의 메서드 목록을 가져옴
-          Method[] methods = methodParam.getType().getClass().getDeclaredMethods();
-
-          // 4) 메서드 중에서 셋터 메서드를 알아냄
-          for (Method m : methods) {
-            if (!m.getName().startsWith("set")){
-              continue;
-            }
-            // 5) 셋터 메서드의 이름에서 프로퍼티 이름을 추출
-            // 예) setFirstName ==> FirstName
-            String propName = Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
-
-            // 6) 프로퍼티 이름으로 넘어온 요청 파라미터 값을 꺼낸다.
-            String requestParamValue = request.getParameter(propName);
-
-            // 7) 도메인 객체의 프로퍼티 이름과 일치하는 요청 파라미터 값이 있다면 객체에 저장한다.
-            if (requestParamValue != null) {
-              m.invoke(obj, requestParamValue);
-            }
-          }
+        } else {
+          // 파라미터 타입이 도메인 클래스일 경우 해당 클래스의 객체를 준비하여
+          // 그 객체에 요청 파라미터 값들을 담은 다음에 저장한다..
+          args[i] = createValueObject(methodParam.getType(), request);
         }
       }
     }
 
     return args;
   }
+
   // 문자열을 주어진 타입으로 변환하여 리턴한다.
   private Object valueOf(String strValue, Class<?> type) {
     if (type == byte.class) {
@@ -194,9 +169,49 @@ public class DispatcherServlet extends HttpServlet {
       return strValue.charAt(0);
     } else if (type == Date.class) {
       return Date.valueOf(strValue);
-    } else if(type == String.class){
+    } else if (type == String.class) {
       return strValue;
     }
     return null;
   }
+
+  // request handler의 파라미터 타입이 도메인 클래스일 때,
+  // 해당 클래스의 객체를 생성하고 요청 파라미터 값을 담아서 리턴한다.
+  private Object createValueObject(Class<?> type, HttpServletRequest request) throws Exception {
+    // 1) 도메인 클래스의 생성자 알아냄
+    Constructor constructor = type.getConstructor();
+
+    // 2) 생성자를 이용하여 도메인 객체 생성
+    Object obj = constructor.newInstance();
+
+    // 3) 도메인 클래스의 메서드 목록을 가져옴
+    Method[] methods = type.getDeclaredMethods();
+
+    // 4) 메서드 중에서 셋터 메서드를 알아냄
+    for (Method setter : methods) {
+      if (!setter.getName().startsWith("set")) {
+        continue;
+      }
+
+      // 5) 셋터 메서드의 이름에서 프로퍼티 이름을 추출
+      // 예) setFirstName ==> firstName
+      String propName =
+          Character.toLowerCase(setter.getName().charAt(3)) + setter.getName().substring(4);
+
+      // 6) 프로퍼티 이름으로 넘어온 요청 파라미터 값을 꺼낸다.
+      String requestParamValue = request.getParameter(propName);
+
+      // 7) 도메인 객체의 프로퍼티 이름과 일치하는 요청 파라미터 값이 있다면 객체에 저장한다.
+      if (requestParamValue != null) {
+        // 셋터 메서드의 파라미터 타입을 알아낸다.
+        Class<?> setterParameterType = setter.getParameters()[0].getType();
+
+        // 셋터를 호출한다.
+        // 예) setFirstName("길동");
+        setter.invoke(obj, valueOf(requestParamValue, setterParameterType));
+      }
+    }
+    return obj;
+  }
+
 }
