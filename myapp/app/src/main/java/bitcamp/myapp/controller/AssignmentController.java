@@ -34,8 +34,8 @@ public class AssignmentController {
   }
 
   @RequestMapping("/assignment/view")
-  public String view(Assignment assignment) throws Exception {
-    assignmentDao.findBy(assignment.getNo());
+  public String view(@RequestParam("no") int no, Map<String, Object> map) throws Exception {
+    Assignment assignment = assignmentDao.findBy(no);
     if (assignment == null) {
       throw new Exception("과제 번호가 유효하지 않습니다.");
     }

@@ -3,6 +3,7 @@ package bitcamp.myapp.servlet;
 import bitcamp.myapp.controller.AssignmentController;
 import bitcamp.myapp.controller.AuthController;
 import bitcamp.myapp.controller.BoardController;
+import bitcamp.myapp.controller.CookieValue;
 import bitcamp.myapp.controller.HomeController;
 import bitcamp.myapp.controller.MemberController;
 import bitcamp.myapp.controller.RequestMapping;
@@ -30,9 +31,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10)
 @WebServlet("/app/*")
@@ -75,15 +78,16 @@ public class DispatcherServlet extends HttpServlet {
       }
 
       //페이지 컨트롤러가 작업한 결과를 담을 보관소를 준비한다.
-      Map<String ,Object> map =new HashMap<>();
+      Map<String, Object> map = new HashMap<>();
 
-      Object[] args = prepareRequestHandlerArguments(requestHandler.handler, request, response, map);
+      Object[] args = prepareRequestHandlerArguments(requestHandler.handler, request, response,
+          map);
 
       String viewUrl = (String) requestHandler.handler.invoke(requestHandler.controller, args);
 
       // 페이지 컨트롤러의 작업이 끝난 후 map 객체에 보관된 값을 JSP가 사용할 수 있도록
       // ServletRequest 보관소로 옮긴다.
-      for (Entry<String, Object> entry : map.entrySet()){
+      for (Entry<String, Object> entry : map.entrySet()) {
         request.setAttribute(entry.getKey(), entry.getValue());
       }
 
@@ -123,7 +127,7 @@ public class DispatcherServlet extends HttpServlet {
       Method handler,
       HttpServletRequest request,
       HttpServletResponse response,
-      Map<String,Object> map) throws Exception {
+      Map<String, Object> map) throws Exception {
 
     // 요청 핸들러의 파라미터 정보를 알아낸다.
     Parameter[] methodParams = handler.getParameters();
@@ -140,9 +144,20 @@ public class DispatcherServlet extends HttpServlet {
       } else if (methodParam.getType() == HttpServletResponse.class
           || methodParam.getType() == ServletResponse.class) {
         args[i] = response;
-      } else if(methodParam.getType() == Map.class){
+      } else if (methodParam.getType() == Map.class) {
         args[i] = map;
+      } else if (methodParam.getType() == HttpSession.class) {
+        args[i] = request.getSession();
       } else {
+        CookieValue cookieValueAnno = methodParam.getAnnotation(CookieValue.class);
+        if (cookieValueAnno != null) {
+          String value = getCookieValue(cookieValueAnno.value(), request);
+          if (value != null) {
+            args[i] = valueOf(value, methodParam.getType());
+          }
+          continue;
+        }
+
         RequestParam requestParam = methodParam.getAnnotation(RequestParam.class);
         if (requestParam != null) {
           // 클라이언트가 보낸 요청 파라미터 값을 원한다면
@@ -150,6 +165,7 @@ public class DispatcherServlet extends HttpServlet {
           String requestParameterName = requestParam.value();
           String requestParameterValue = request.getParameter(requestParameterName);
           args[i] = valueOf(requestParameterValue, methodParam.getType());
+          continue;
 
         } else {
           // 파라미터 타입이 도메인 클래스일 경우 해당 클래스의 객체를 준비하여
@@ -227,4 +243,15 @@ public class DispatcherServlet extends HttpServlet {
     return obj;
   }
 
+  private String getCookieValue(String name, HttpServletRequest request) {
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("email")) {
+          return cookie.getValue();
+        }
+      }
+    }
+    return null;
+  }
 }
