@@ -3,9 +3,7 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import java.util.Map;
-import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -18,8 +16,8 @@ public class AuthController {
   }
 
   @RequestMapping("/auth/form")
-  public String form(@CookieValue("email") String email, Map<String, Object> map){
-    map.put("email",email);
+  public String form(@CookieValue("email") String email, Map<String, Object> map) {
+    map.put("email", email);
     return "/auth/form.jsp";
   }
 
@@ -28,8 +26,8 @@ public class AuthController {
       @RequestParam("email") String email,
       @RequestParam("password") String password,
       @RequestParam("saveEmail") String saveEmail,
-      HttpSession session,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response,
+      HttpSession session) throws Exception {
 
     if (saveEmail != null) {
       Cookie cookie = new Cookie("email", email);

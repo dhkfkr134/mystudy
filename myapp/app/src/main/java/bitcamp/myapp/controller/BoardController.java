@@ -35,19 +35,19 @@ public class BoardController {
   @RequestMapping("/board/form")
   public String form(
       @RequestParam("category") int category,
-      Map<String,Object> map
-      ) throws Exception {
+      Map<String, Object> map) throws Exception {
+
     map.put("boardName", category == 1 ? "게시글" : "가입인사");
     map.put("category", category);
     return "/board/form.jsp";
   }
 
-    @RequestMapping("/board/add")
+  @RequestMapping("/board/add")
   public String add(
-        Board board,
-        @RequestParam("files") Part[] files,
-        HttpSession session,
-        Map<String,Object> map) throws Exception {
+      Board board,
+      @RequestParam("files") Part[] files,
+      HttpSession session,
+      Map<String, Object> map) throws Exception {
 
     int category = board.getCategory();
     map.put("boardName", category == 1 ? "게시글" : "가입인사");
@@ -61,7 +61,6 @@ public class BoardController {
       board.setWriter(loginUser);
 
       ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
-
       if (category == 1) {
         for (Part file : files) {
           if (file.getSize() == 0) {
@@ -97,64 +96,66 @@ public class BoardController {
   }
 
   @RequestMapping("/board/list")
-  public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int category = Integer.valueOf(request.getParameter("category"));
-    request.setAttribute("boardName", category == 1 ? "게시글" : "가입인사");
-    request.setAttribute("list", boardDao.findAll(category));
-    request.setAttribute("category", category);
+  public String list(
+      @RequestParam("category") int category,
+      Map<String, Object> map
+  ) throws Exception {
+    map.put("boardName", category == 1 ? "게시글" : "가입인사");
+    map.put("category", category);
+    map.put("list", boardDao.findAll(category));
     return "/board/list.jsp";
   }
 
   @RequestMapping("/board/view")
-  public String view(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-    int category = Integer.valueOf(request.getParameter("category"));
-    int no = Integer.parseInt(request.getParameter("no"));
+  public String view(
+      @RequestParam("category") int category,
+      @RequestParam("no") int no,
+      Map<String, Object> map
+  ) throws Exception {
     Board board = boardDao.findBy(no);
     if (board == null) {
       throw new Exception("번호가 유효하지 않습니다.");
     }
 
-    request.setAttribute("boardName", category == 1 ? "게시글" : "가입인사");
-    request.setAttribute("category", category);
-    request.setAttribute("board", board);
+    map.put("boardName", category == 1 ? "게시글" : "가입인사");
+    map.put("category", category);
+    map.put("board", board);
     if (category == 1) {
-      request.setAttribute("files", attachedFileDao.findAllByBoardNo(no));
+      map.put("files", attachedFileDao.findAllByBoardNo(no));
     }
     return "/board/view.jsp";
   }
 
   @RequestMapping("/board/update")
-  public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String update(
+      Board board,
+      @RequestParam("files") Part[] files,
+      HttpSession session,
+      Map<String, Object> map
+  ) throws Exception {
 
-    int category = Integer.valueOf(request.getParameter("category"));
     try {
-      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+      Member loginUser = (Member) session.getAttribute("loginUser");
       if (loginUser == null) {
         throw new Exception("로그인하시기 바랍니다!");
       }
 
-      int no = Integer.parseInt(request.getParameter("no"));
-      Board board = boardDao.findBy(no);
-      if (board == null) {
+      Board old = boardDao.findBy(board.getNo());
+      if (old == null) {
         throw new Exception("번호가 유효하지 않습니다.");
 
-      } else if (board.getWriter().getNo() != loginUser.getNo()) {
+      } else if (old.getWriter().getNo() != loginUser.getNo()) {
         throw new Exception("권한이 없습니다.");
       }
 
-      board.setTitle(request.getParameter("title"));
-      board.setContent(request.getParameter("content"));
-
       ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
-      if (category == 1) {
-        Collection<Part> parts = request.getParts();
-        for (Part part : parts) {
-          if (!part.getName().equals("files") || part.getSize() == 0) {
+      if (board.getCategory() == 1) {
+        for (Part file : files) {
+          if (file.getSize() == 0) {
             continue;
           }
           String filename = UUID.randomUUID().toString();
-          part.write(this.uploadDir + "/" + filename);
+          file.write(this.uploadDir + "/" + filename);
           attachedFiles.add(new AttachedFile().filePath(filename));
         }
       }
@@ -168,7 +169,7 @@ public class BoardController {
         attachedFileDao.addAll(attachedFiles);
       }
       txManager.commit();
-      return "redirect:list?category=" + category;
+      return "redirect:list?category=" + board.getCategory();
 
     } catch (Exception e) {
       try {
@@ -180,17 +181,17 @@ public class BoardController {
   }
 
   @RequestMapping("/board/delete")
-  public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-    int category = Integer.valueOf(request.getParameter("category"));
-
+  public String delete(
+      @RequestParam("category") int category,
+      @RequestParam("no") int no,
+      HttpSession session
+  ) throws Exception {
     try {
-      Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+      Member loginUser = (Member) session.getAttribute("loginUser");
       if (loginUser == null) {
         throw new Exception("로그인하시기 바랍니다!");
       }
 
-      int no = Integer.parseInt(request.getParameter("no"));
       Board board = boardDao.findBy(no);
       if (board == null) {
         throw new Exception("번호가 유효하지 않습니다.");
@@ -222,16 +223,17 @@ public class BoardController {
   }
 
   @RequestMapping("/board/file/delete")
-  public String fileDelete(HttpServletRequest request, HttpServletResponse response)
-      throws Exception {
-    int category = Integer.valueOf(request.getParameter("category"));
+  public String fileDelete(
+      @RequestParam("category") int category,
+      @RequestParam("no") int fileNo,
+      HttpSession session
+  ) throws Exception {
 
-    Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+    Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
       throw new Exception("로그인하시기 바랍니다!");
     }
 
-    int fileNo = Integer.parseInt(request.getParameter("no"));
     AttachedFile file = attachedFileDao.findByNo(fileNo);
     if (file == null) {
       throw new Exception("첨부파일 번호가 유효하지 않습니다.");
