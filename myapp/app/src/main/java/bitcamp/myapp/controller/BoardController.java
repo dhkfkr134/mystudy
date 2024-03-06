@@ -8,12 +8,9 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.util.TransactionManager;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -24,8 +21,11 @@ public class BoardController {
   private AttachedFileDao attachedFileDao;
   private String uploadDir = System.getProperty("board.upload.dir");
 
-  public BoardController(TransactionManager txManager, BoardDao boardDao,
+  public BoardController(
+      TransactionManager txManager,
+      BoardDao boardDao,
       AttachedFileDao attachedFileDao) {
+
     this.txManager = txManager;
     this.boardDao = boardDao;
     this.attachedFileDao = attachedFileDao;
@@ -74,7 +74,6 @@ public class BoardController {
       txManager.startTransaction();
 
       boardDao.add(board);
-
       if (attachedFiles.size() > 0) {
         for (AttachedFile attachedFile : attachedFiles) {
           attachedFile.setBoardNo(board.getNo());
@@ -97,8 +96,8 @@ public class BoardController {
   @RequestMapping("/board/list")
   public String list(
       @RequestParam("category") int category,
-      Map<String, Object> map
-  ) throws Exception {
+      Map<String, Object> map) throws Exception {
+
     map.put("boardName", category == 1 ? "게시글" : "가입인사");
     map.put("category", category);
     map.put("list", boardDao.findAll(category));
@@ -109,8 +108,8 @@ public class BoardController {
   public String view(
       @RequestParam("category") int category,
       @RequestParam("no") int no,
-      Map<String, Object> map
-  ) throws Exception {
+      Map<String, Object> map) throws Exception {
+
     Board board = boardDao.findBy(no);
     if (board == null) {
       throw new Exception("번호가 유효하지 않습니다.");
@@ -130,8 +129,7 @@ public class BoardController {
       Board board,
       @RequestParam("files") Part[] files,
       HttpSession session,
-      Map<String, Object> map
-  ) throws Exception {
+      Map<String, Object> map) throws Exception {
 
     try {
       Member loginUser = (Member) session.getAttribute("loginUser");
@@ -183,8 +181,8 @@ public class BoardController {
   public String delete(
       @RequestParam("category") int category,
       @RequestParam("no") int no,
-      HttpSession session
-  ) throws Exception {
+      HttpSession session) throws Exception {
+
     try {
       Member loginUser = (Member) session.getAttribute("loginUser");
       if (loginUser == null) {
@@ -225,8 +223,7 @@ public class BoardController {
   public String fileDelete(
       @RequestParam("category") int category,
       @RequestParam("no") int fileNo,
-      HttpSession session
-  ) throws Exception {
+      HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
