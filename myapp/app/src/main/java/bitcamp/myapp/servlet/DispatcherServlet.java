@@ -81,6 +81,7 @@ public class DispatcherServlet extends HttpServlet {
         throw new Exception(request.getPathInfo() + " 요청 페이지를 찾을 수 없습니다.");
       }
 
+
       // 페이지 컨트롤러가 작업한 결과를 담을 보관소를 준비한다.
       Map<String, Object> map = new HashMap<>();
       Object[] args = prepareRequestHandlerArguments(requestHandler.handler, request, response,
