@@ -11,6 +11,8 @@
         http://www.springframework.org/schema/mvc
         https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+  <bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver"
+    id="multipart-config"/>
   <context:component-scan base-package="bitcamp.myapp.controller"/>
   <mvc:annotation-driven/>
 
