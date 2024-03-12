@@ -36,7 +36,7 @@ public class Exam0210 {
     // - 스레드풀은 큐에서 작업을 꺼내 스레드에게 일을 시킨다.
     //
     executorService.execute(new MyRunnable(6000));
-    executorService.execute(new MyRunnable(7000));
+    executorService.execute(new MyRunnable(3000));
     executorService.execute(new MyRunnable(9000));
 
     // 스레드풀의 크기를 초과해서 작업 수행을 요청한다면?
@@ -46,6 +46,8 @@ public class Exam0210 {
     //
     executorService.execute(new MyRunnable(2000));
     executorService.execute(new MyRunnable(4000));
+
+    executorService.shutdown();
 
     System.out.println("main() 종료!");
   }

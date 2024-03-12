@@ -24,16 +24,9 @@ public class Exam0110 {
     }
 
     public void print() {
-      int one =0, two = 0, three = 0;
       for (int i = 0; i < size; i++) {
-        if (values[i] == 111) {
-          one += 1;
-        }
-        if (values[i] == 222) two++;
-        if (values[i] == 333) three++;
         System.out.printf("%d:  %d\n", i, values[i]);
       }
-      System.out.printf("%d, %d, %d",one,two,three);
     }
 
     public void delay() {

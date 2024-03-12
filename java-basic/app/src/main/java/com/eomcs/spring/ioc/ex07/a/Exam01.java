@@ -25,7 +25,6 @@ public class Exam01 {
     // byte, short, int, long, float, double, boolean, char로 바꿀 수 있다.
     // => 그 외의 타입은 개발자가 프로퍼티 에디터를 만들어 등록해야 한다.
   }
-
 }
 
 

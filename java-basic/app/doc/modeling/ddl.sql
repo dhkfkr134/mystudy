@@ -134,11 +134,6 @@ ALTER TABLE lms_teachers
   teacher_no -- 강사번호
   );
 
--- 강사 유니크 인덱스
-CREATE UNIQUE INDEX UIX_lms_teachers
-  ON lms_teachers ( -- 강사
-  );
-
 -- 강의실사진
 CREATE TABLE lms_photos (
   photo_no INTEGER      NOT NULL COMMENT '강의실사진번호', -- 강의실사진번호
