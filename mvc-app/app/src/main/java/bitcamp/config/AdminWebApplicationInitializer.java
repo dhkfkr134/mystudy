@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.AbstractDispatcherServletInitiali
 
 public class AdminWebApplicationInitializer extends
     AbstractAnnotationConfigDispatcherServletInitializer {
+
   private static Log log = LogFactory.getLog(AdminWebApplicationInitializer.class);
 
   @Override
