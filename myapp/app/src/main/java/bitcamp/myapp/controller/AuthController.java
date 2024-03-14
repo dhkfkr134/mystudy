@@ -22,7 +22,7 @@ public class AuthController {
   }
 
   @RequestMapping("/auth/form")
-  public String form(@CookieValue(value = "email", required = false) String email, Map<String, Object> map) {
+  public String form(@CookieValue("email") String email, Map<String, Object> map) {
     map.put("email", email);
     return "/auth/form.jsp";
   }
@@ -31,7 +31,7 @@ public class AuthController {
   public String login(
       @RequestParam("email") String email,
       @RequestParam("password") String password,
-      @RequestParam(value = "saveEmail", required = false) String saveEmail,
+      @RequestParam("saveEmail") String saveEmail,
       HttpServletResponse response,
       HttpSession session) throws Exception {
 
