@@ -10,7 +10,7 @@
   
   <!-- 프론트 컨트롤러가 사용할 웹 관련 객체가 들어 있는 패키지를 지정한다. -->
   <context:component-scan base-package="bitcamp.web">
-    <context:exclude-filter type="regex" expression="bitcamp.web.admin.*"/>
+    <context:exclude-filter type="regex" expression="bitcamp.web.app.*"/>
   </context:component-scan>
   
 </beans>

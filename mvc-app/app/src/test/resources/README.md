@@ -1,1 +1,1 @@
-# src/test/resources
+단위 테스트할 때 사용할 일반 파일
