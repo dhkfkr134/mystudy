@@ -16,7 +16,7 @@ import bitcamp.vo.Board;
 public class BoardController {
 
   private static Log log = LogFactory.getLog(BoardController.class);
-  
+
   @Autowired
   BoardDao boardDao; // 이 객체는 ContextLoaderListener에서 관리하는 객체이다.
 
@@ -28,7 +28,7 @@ public class BoardController {
   @ResponseBody
   public String list() throws Exception {
     List<Board> boards = boardDao.findAll();
-    
+
     StringBuffer sb = new StringBuffer();
     for (Board board : boards) {
       sb.append(board.toString() + "\n");
