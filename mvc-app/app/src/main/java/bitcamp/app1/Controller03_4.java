@@ -39,9 +39,7 @@ public class Controller03_4 {
   // 다음 메서드는 multipart/form-data 형식의 데이터를 소비한다.
   @PostMapping(consumes = "multipart/form-data")
   @ResponseBody
-  public String handler2(@RequestBody MultipartFile img)  {
-    System.out.println("@@");
-    System.out.println(img);
+  public String handler2()  {
     return "handler2";
   }
 
