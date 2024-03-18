@@ -30,10 +30,10 @@ public class Controller03_4 {
   // 다음 메서드는 application/x-www-form-urlencoded 형식의 데이터를 소비한다.
   // => 즉 클라이언트의 HTTP 요청에서 Content-Type 헤더의 값이 위와 같을 때
   //    이 메서드를 호출하라는 의미다.
-  @PostMapping(consumes = "application/x-www-form-urlencoded")
+  @PostMapping(consumes = "application/x-www-form-urlencoded", produces = "text/pain;charset=utf-8")
   @ResponseBody
-  public String handler1() {
-    return "handler1";
+  public String handler1(@RequestBody String name) {
+    return "김정원";
   }
 
   // 다음 메서드는 multipart/form-data 형식의 데이터를 소비한다.
@@ -47,7 +47,7 @@ public class Controller03_4 {
   @PostMapping(consumes = "text/csv", produces = "text/csv;charset=utf-8")
   @ResponseBody
   public String handler3(@RequestBody String test) {
-    System.out.print(test);return test;
+    System.out.println(test);return test;
   }
 
   // 다음 메서드는 application/json 형식의 데이터를 소비한다.

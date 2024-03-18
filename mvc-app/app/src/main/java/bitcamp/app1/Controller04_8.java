@@ -46,9 +46,9 @@ public class Controller04_8 {
       ) throws Exception {
 
     String filename = null;
-    if (photo.getSize() > 0) {
+    if (photo != null && photo.getSize() > 0) {
       filename = UUID.randomUUID().toString();
-      String path = sc.getRealPath("/html/app1/" + filename);
+      String path = sc.getRealPath("/upload/" + filename);
       photo.write(path);
     }
 
