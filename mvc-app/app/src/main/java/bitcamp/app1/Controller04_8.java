@@ -46,6 +46,7 @@ public class Controller04_8 {
       ) throws Exception {
 
     String filename = null;
+    System.out.println("@@" + photo);
     if (photo != null && photo.getSize() > 0) {
       filename = UUID.randomUUID().toString();
       String path = sc.getRealPath("/upload/" + filename);
@@ -57,7 +58,7 @@ public class Controller04_8 {
         // 현재 URL이 다음과 같기 때문에 업로드 이미지의 URL을 이 경로를 기준으로 계산해야 한다.
         // http://localhost:8080/java-spring-webmvc/app1/c04_8/h1
         //
-        (filename != null ? "<p><img src='../../html/app1/" + filename + "'></p>" : "")
+        (filename != null ? "<p><img src='../../upload/" + filename + "'></p>" : "")
         + "</body></html>";
   }
 
