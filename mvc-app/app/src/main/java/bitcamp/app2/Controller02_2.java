@@ -33,8 +33,8 @@ public class Controller02_2 {
       // @MatrixVariable("age") int age
 
       // 매트릭스 변수명을 생략하면 아규먼트의 이름을 사용한다.
-      @MatrixVariable String name,
-      @MatrixVariable int age
+      @MatrixVariable(required = false) String name,
+      @MatrixVariable(defaultValue = "20") int age
       ) {
 
     // @MatrixVariable 애노테이션을 사용하려면
