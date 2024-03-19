@@ -112,9 +112,9 @@ public class Controller04_8 {
     for (MultipartFile f : photo) {
       if (!f.isEmpty()) {
         String filename = UUID.randomUUID().toString();
-        String path = sc.getRealPath("/html/app1/" + filename);
+        String path = sc.getRealPath("/upload/" + filename);
         f.transferTo(new File(path));
-        out.printf("<p><img src='../../html/app1/%s'></p>\n", filename);
+        out.printf("<p><img src='../../upload/%s'></p>\n", filename);
       }
     }
     out.println("</body></html>");
