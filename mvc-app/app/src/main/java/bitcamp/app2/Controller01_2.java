@@ -59,16 +59,20 @@ public class Controller01_2 {
     // => 프론트 컨트롤러는 ViewResolver가 준비한 URL을 가지고
     //    View 객체를 통해 해당 URL의 자원을 실행한다.
     //
-    return "c01_2/h1"; // => /WEB-INF/jsp2/c01_1/h1.jsp
+    return "c01_1"; // => /WEB-INF/jsp/c01_1.jsp
   }
 
   // 테스트:
   // http://localhost:9999/eomcs-spring-webmvc/app2/c01_1/h2
   @GetMapping("h2")
-  public void handler2(Model model) {
+  public void handler2(
+      Model model,
+      String name,
+      int age
+  ) {
 
-    model.addAttribute("name", "홍길동2");
-    model.addAttribute("age", 30);
+    model.addAttribute("name", name);
+    model.addAttribute("age", age);
 
     // InternalResourceViewResolver를 사용하는 경우,
     // request handler가 뷰 이름을 리턴하지 않으면

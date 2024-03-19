@@ -25,7 +25,7 @@ public class Controller01_1 {
     // 웹 애플리케이션 디렉토리에서 JSP를 찾는다.
     // 웹 애플리케이션이 경로가 /eomcs-spring-webmvc 라면,
     // JSP 경로는 다음과 같다.
-    // ==> /eomcs-spring-webmvc/jsp/c01_1.jsp
+    // ==> /컨텍스트경로/jsp/c01_1.jsp
     //
     // InternalResourceViewResolver로 교체한 다음의 JSP URL은?
     // => /WEB-INF/jsp2//jsp/c01_1.jsp.jsp
@@ -39,7 +39,13 @@ public class Controller01_1 {
     model.addAttribute("age", 30);
 
     // 기본 ViewRosolver를 사용할 때는
-    // 뷰 이름을 리턴하지 않으면 오류 발생!
+    // 뷰 이름을 리턴하지 않으면
+    // request handler의 URL을 기준으로 view URL을 계산한다.
+    // => 현재 URL = /app2/c01_1/h2
+    // => view URL = 현재 URL의 경로 + request handler의 전체 URL
+    //              = /app2/c01_1 + /c01_1/h2
+    //              = /app2/c01_1/c01_1/h2
+    // 오류 발생!
     //
     // InternalResourceViewResolver로 교체한 다음은?
     // => 리턴 값이 없으면 요청 URL(/c01_1/h2)을 리턴 값으로 사용한다.
